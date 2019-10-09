@@ -1,7 +1,7 @@
 import { Action, getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators';
 import store from '../index';
 
-@Module({ dynamic: true, namespaced: true, name: 'gameModule', store })
+@Module({ dynamic: true, namespaced: true, name: 'counterModule', store })
 class CounterModule extends VuexModule {
     private _count = 150;
 

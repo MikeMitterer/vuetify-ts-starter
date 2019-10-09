@@ -2,7 +2,9 @@
     <v-app id="app" class="layout--off" color="gray-lighten2">
         <v-app-bar app color="indigo" dark clipped-left>
             <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-            <v-toolbar-title class="title">Application</v-toolbar-title>
+            <router-link to="/" class="to-home white--text">
+                <v-toolbar-title class="title">Application</v-toolbar-title>
+            </router-link>
             <AppHeader></AppHeader>
         </v-app-bar>
         <v-navigation-drawer app class="primary" v-model="drawer" stateless clipped>
@@ -38,10 +40,7 @@
             </v-list>
         </v-navigation-drawer>
         <v-content>
-            <!-- fluid -->
-            <v-container class="stretch" justify="start">
-                <router-view />
-            </v-container>
+            <router-view />
         </v-content>
         <AppFooter title="Mike"></AppFooter>
         <!--        <v-footer fixed dark>Hallo TEST</v-footer>-->
@@ -74,7 +73,9 @@ export default class App extends Vue {
 </script>
 
 <style lang="scss">
-.title {
-    min-width: fit-content;
+.v-app-bar {
+    a.to-home {
+        text-decoration: none;
+    }
 }
 </style>

@@ -1,8 +1,18 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import auth from './store/modules/AuthModule';
 import Home from './views/Home.vue';
 
 Vue.use(Router);
+
+// tslint:disable-next-line:no-any
+const ifAuthenticated = (to: any, from: any, next: any): void => {
+    if (auth.isAuthenticated) {
+        next();
+        return;
+    }
+    next('/login');
+};
 
 export default new Router({
     mode: 'history',
@@ -12,6 +22,7 @@ export default new Router({
             path: '/',
             name: 'home',
             component: Home,
+            beforeEnter: ifAuthenticated,
         },
         {
             path: '/about',
@@ -21,6 +32,15 @@ export default new Router({
             // which is lazy-loaded when the route is visited.
             component: (): Promise<typeof import('*.vue')> =>
                 import(/* webpackChunkName: "about" */ './views/About.vue'),
+
+            beforeEnter: ifAuthenticated,
         },
+        {
+            path: '/login',
+            name: 'login',
+            component: (): Promise<typeof import('*.vue')> =>
+                import(/* webpackChunkName: "login" */ './views/Login.vue'),
+        },
+        { path: '*', redirect: '/' },
     ],
 });

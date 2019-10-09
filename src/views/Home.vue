@@ -1,5 +1,9 @@
 <template>
-    <v-container class="home" fluid>
+    <!--
+    The v-container component simply centers your content in the middle of the screen.
+    If you add the fluid prop, your content will occupy the full width of the screen.
+     -->
+    <v-container class="home">
         <img alt="Vue logo" class="logo" src="../assets/logo.png" />
         <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
         <h3>From Store!</h3>
@@ -23,4 +27,4 @@ export default class Home extends Vue {
     }
 }
 </script>
-<style></style>
+<style lang="scss"></style>
