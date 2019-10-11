@@ -5,6 +5,7 @@
         <v-toolbar-items>
             <v-btn text to="/" :ripple="false">Home</v-btn>
             <v-btn text to="/about" :ripple="false">About</v-btn>
+            <v-btn text to="/articles" :ripple="false">Articles</v-btn>
         </v-toolbar-items>
 
         <v-spacer></v-spacer>

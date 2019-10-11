@@ -6,7 +6,7 @@
                 <v-btn class="mr-3" color="error" small v-on:click="onClickDecrement">-</v-btn>
                 <span>Loading... / {{ title_inc || title }} </span>
                 <span v-if="isEven">even</span>
-                <span v-if="counter % 2 !== 0">odd</span>
+                <span v-if="count % 2 !== 0">odd</span>
             </v-col>
             <v-col class="version_block align-end">
                 <span class="version">Version {{ version }}</span>
@@ -14,39 +14,47 @@
                 <span class="published">{{ published }}</span>
             </v-col>
         </v-row>
-        <!--        <div>-->
-        <!--        </div>-->
-        <!--        <div>-->
-        <!--            <div class="version_block">-->
-        <!--            </div>-->
-        <!--            <span v-if="devmode" class="devmode">DevMode</span>-->
-        <!--            <span v-if="!devmode" class="production">Production</span>-->
-        <!--        </div>-->
     </v-footer>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import CounterModule from '../store/modules/CounterModule';
+import { namespace } from 'vuex-class';
+// import CounterModule from '../store/modules/CounterModule';
+
+// Weitere Infos:
+//      https://medium.com/@fernalvarez/level-up-your-vuejs-project-with-typescript-part-3-vuex-7ad6333db947
+//      https://github.com/ktsn/vuex-class
+const counterModule = namespace('counterModule');
 
 @Component
 export default class AppFooter extends Vue {
     @Prop({ default: process.env.VUE_APP_TITLE })
     private title!: string;
 
+    @counterModule.Getter
+    private readonly count!: number;
+
+    @counterModule.Action
+    private increment!: (delta: number) => Promise<number>;
+
+    @counterModule.Action
+    private decrement!: (delta: number) => Promise<number>;
+
     // Component methods can be declared as instance methods
     public onClickIncrement(): void {
-        CounterModule.increment(1);
-        // this.anotherTitle = `${this.title} + ${counter.count}`;
+        // CounterModule.increment(1);
+        this.increment(1);
     }
 
     public onClickDecrement(): void {
-        CounterModule.decrement(1);
-        // this.anotherTitle = `${this.title} + ${counter.count}`;
+        // CounterModule.decrement(1);
+        this.$store.dispatch('counterModule/decrement', 1);
     }
 
     public get title_inc(): string {
-        return `${this.title} + ${CounterModule.count}`;
+        return `${this.title} + ${this.count}`;
+        // return `${this.title} + ${CounterModule.count}`;
     }
 
     public get published(): string {
@@ -65,11 +73,8 @@ export default class AppFooter extends Vue {
     }
 
     public get isEven(): boolean {
-        return CounterModule.count % 2 === 0;
-    }
-
-    public get counter(): number {
-        return CounterModule.count;
+        // return CounterModule.count % 2 === 0;
+        return this.count % 2 === 0;
     }
 }
 </script>

@@ -21,6 +21,7 @@ class AuthModule extends VuexModule {
     }
 
     // action 'login' commits mutation '_login' when done with return value as payload
+    // Action kann nur EINEN Parameter haben - Payload!
     @Action({ commit: '_login' })
     public async login(payload: Credential): Promise<boolean> {
         const found = this.credentials.find((credential) => {

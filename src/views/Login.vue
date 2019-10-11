@@ -15,6 +15,7 @@
                                 name="login"
                                 prepend-icon="person"
                                 type="text"
+                                autofocus
                             ></v-text-field>
 
                             <v-text-field
@@ -24,6 +25,7 @@
                                 name="password"
                                 prepend-icon="lock"
                                 type="password"
+                                autocomplete
                             ></v-text-field>
                         </v-form>
                     </v-card-text>
