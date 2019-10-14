@@ -43,7 +43,14 @@ export default new Router({
 
             beforeEnter: ifAuthenticated,
         },
+        {
+            path: '/article/:id',
+            name: 'article',
+            component: (): Promise<typeof import('*.vue')> =>
+                import(/* webpackChunkName: "articles" */ './views/ArticleView.vue'),
 
+            beforeEnter: ifAuthenticated,
+        },
         {
             path: '/login',
             name: 'login',

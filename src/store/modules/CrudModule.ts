@@ -1,16 +1,11 @@
-import { LoggerFactory } from '@mmit/logging';
+import { Article } from '@/model/Article';
+// import { LoggerFactory } from '@mmit/logging';
 import { Action, getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators';
 import store from '../index';
 
-export interface Article {
-    id: string;
-    description: string;
-    price: number;
-}
-
 @Module({ dynamic: true, namespaced: true, name: 'crudModule', store })
 class CrudModule extends VuexModule {
-    private readonly logger = LoggerFactory.getLogger('store.CrudModule');
+    // private readonly logger = LoggerFactory.getLogger('store.CrudModule');
 
     private readonly _articles: Article[] = [
         { id: 'f17056e7-9e5b-4191-aea2-79a3378f6723', description: 'First Article', price: 123.4 },
@@ -23,7 +18,7 @@ class CrudModule extends VuexModule {
 
     // action 'add' commits mutation '_add' when done with return value as payload
     // Action kann nur EINEN Parameter haben - Payload!
-    @Action({ commit: '_login' })
+    @Action({ commit: '_add' })
     public async add(article: Article): Promise<Article> {
         return article;
     }
