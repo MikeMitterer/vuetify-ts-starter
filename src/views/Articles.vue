@@ -3,7 +3,7 @@
         <v-btn fixed dark fab bottom right color="pink" class="mb-10" @click="addItem">
             <v-icon>mdi-plus</v-icon>
         </v-btn>
-        <h1 class="display-2">Articles</h1>
+        <h1 class="display-2 mb-3">Articles</h1>
         <ArticleComponent
             v-if="isInAddMode"
             :article="item"
@@ -11,13 +11,23 @@
             @save-item="onSaveItem"
             @cancel="onCancel"
         ></ArticleComponent>
-        <div class="d-flex flex-wrap justify-space-around">
-            <ArticleComponent
-                class="ml-2"
-                :article="article"
-                v-for="article in articles"
-                :key="article.id"
-            ></ArticleComponent>
+        <div>
+            <v-item-group class="grid-container">
+                <v-item
+                    v-for="article in articles"
+                    :key="article.id"
+                    v-slot:default="{ active, toggle }"
+                >
+                    <ArticleComponent
+                        class="ml-2"
+                        :article="article"
+                        @delete-item="onDelete"
+                        @activate="toggle"
+                        :class="{ 'light-green lighten-3': active }"
+                        :isActive="active"
+                    ></ArticleComponent>
+                </v-item>
+            </v-item-group>
         </div>
     </v-container>
 </template>
@@ -62,8 +72,38 @@ export default class Articles extends Vue {
 
     // noinspection JSUnusedLocalSymbols
     private onCancel(): void {
+        this.logger.info('Cancel');
         this.item = undefined;
+    }
+
+    // noinspection JSUnusedLocalSymbols
+    private onDelete(id: string): void {
+        this.logger.info(`Delete ITEM: ${id}`);
+        crudModule.delete(id);
+    }
+
+    // noinspection JSUnusedLocalSymbols
+    private onTestClick(id: string): void {
+        this.logger.info(`Test-Click`);
     }
 }
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+.grid-container {
+    /*display: grid;*/
+    /*grid-template-columns: 1fr 1fr 1fr;*/
+    /*grid-template-rows: 1fr 200px;*/
+    /*grid-column-gap: 20px;*/
+    /*grid-row-gap: 20px;*/
+    /*justify-items: stretch;*/
+    /*align-items: start;*/
+
+    display: grid;
+    grid-gap: 10px;
+    // grid-template-columns: repeat(auto-fit, 300px);
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+
+    justify-items: stretch;
+    align-items: start;
+}
+</style>
