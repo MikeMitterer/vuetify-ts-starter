@@ -4,13 +4,14 @@
         <!--<router-link to="/about">About</router-link>-->
         <v-toolbar-items>
             <v-btn text to="/" :ripple="false">Home</v-btn>
-            <v-btn text to="/about" :ripple="false">About</v-btn>
             <v-btn text to="/articles" :ripple="false">Articles</v-btn>
         </v-toolbar-items>
 
         <v-spacer></v-spacer>
 
         <v-toolbar-items>
+            <v-btn text to="/about" :ripple="false">About</v-btn>
+
             <v-btn icon to="/login" v-if="!isAuthenticated">
                 <v-icon>mdi-login</v-icon>
             </v-btn>
@@ -18,8 +19,8 @@
                 <v-icon>mdi-logout</v-icon>
             </v-btn>
             <v-badge style="margin-top: 14px" class="mr-2">
-                <template v-slot:badge
-                    >0
+                <template v-slot:badge>
+                    0
                 </template>
                 <v-icon>mdi-email</v-icon>
             </v-badge>
