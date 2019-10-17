@@ -4,27 +4,27 @@
             <v-icon>mdi-plus</v-icon>
         </v-btn>
         <h1 class="display-2 mb-3">Articles</h1>
-        <ArticleComponent
-            v-if="isInAddMode"
-            :article="item"
-            :addMode="isInAddMode"
-            @save-item="onSaveItem"
-            @cancel="onCancel"
-        ></ArticleComponent>
         <div>
             <v-item-group class="grid-container">
-                <v-item
-                    v-for="article in articles"
-                    :key="article.id"
-                    v-slot:default="{ active, toggle }"
-                >
+                <v-item v-if="isInAddMode" v-slot:default="{ active, toggle }">
+                    <ArticleComponent
+                        :article="item"
+                        :addMode="isInAddMode"
+                        :class="{ 'light-purble lighten-3': active, 'full-width': isInAddMode }"
+                        :isActive="active"
+                        @activate="toggle"
+                        @save-item="onSaveItem"
+                        @cancel="onCancel"
+                    ></ArticleComponent>
+                </v-item>
+                <v-item v-for="article in articles" :key="article.id" v-slot:default="{ active, toggle }">
                     <ArticleComponent
                         class="ml-2"
                         :article="article"
-                        @delete-item="onDelete"
-                        @activate="toggle"
                         :class="{ 'light-green lighten-3': active }"
                         :isActive="active"
+                        @activate="toggle"
+                        @delete-item="onDelete"
                     ></ArticleComponent>
                 </v-item>
             </v-item-group>
@@ -105,5 +105,9 @@ export default class Articles extends Vue {
 
     justify-items: stretch;
     align-items: start;
+
+    .full-width {
+        grid-column: 1 / -1;
+    }
 }
 </style>

@@ -1,7 +1,7 @@
 $header-height: 0px;
 $footer-height: 40px;
 
-@import 'layout';
+// @import 'layout';
 @import 'debug';
 
 // https://developer.mozilla.org/en-US/docs/Web/CSS/:root
@@ -24,6 +24,20 @@ $footer-height: 40px;
     overflow-y: scroll;
 }
 
+.v-card__text {
+    > .container, > .v-item-group > .container {
+        padding: 0;
+    }
+}
+
 .round {
     border-radius: 4px;
+}
+
+.on-hover {
+    visibility: hidden;
+
+    &.on-hover__show {
+        visibility: visible;
+    }
 }

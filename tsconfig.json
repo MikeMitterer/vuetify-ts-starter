@@ -25,6 +25,9 @@
 
         "baseUrl": ".",
         "types": ["webpack-env", "jest", "node", "vuetify"],
+        // Fallback wenn nach d.ts Files gesucht wird
+        // "typeRoots": ["./src/shims-vuetify.d.ts"],
+        
         "paths": {
             "@/*": ["src/*"]
         },
