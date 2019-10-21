@@ -34,6 +34,11 @@
                         <v-btn color="primary" @click="login" :disabled="loading">Login</v-btn>
                     </v-card-actions>
                 </v-card>
+                <p class="mt-4 font-weight-light">
+                    Username: `guest4@shiro.at`
+                    <br />
+                    Password: `guest123B?`
+                </p>
             </v-col>
         </v-row>
     </v-container>
