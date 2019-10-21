@@ -24,7 +24,7 @@
         "importHelpers": true,
 
         "baseUrl": ".",
-        "types": ["webpack-env", "jest", "node", "vuetify"],
+        "types": ["webpack-env", "jest", "node", "vuetify", "jest-extended"],
         // Fallback wenn nach d.ts Files gesucht wird
         // "typeRoots": ["./src/shims-vuetify.d.ts"],
         
@@ -44,10 +44,13 @@
         "src/**/*.vue",
         "tests/**/*.ts",
         "tests/**/*.tsx",
+
         // Damit werden die images erkannt
         "src/browser/**/*.ts",
         "src/site/images/typings.d.ts",
         "src/site/images"
+
+
     ],
     "exclude": ["node_modules"]
 }
