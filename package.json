@@ -1,8 +1,8 @@
 {
-    "name": "@mmit/vuetsstarter",
+    "name": "@mmit/vuetify-ts-starter",
     "version": "0.1.9",
     "author": "Mike Mitterer",
-    "description": "VUE Starter-Template",
+    "description": "VUETIFY/TS Starter-Template",
     "keywords": [
         "typescript vue"
     ],
