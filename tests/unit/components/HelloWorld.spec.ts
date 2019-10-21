@@ -60,8 +60,5 @@ describe('HelloWorld.vue', () => {
 
         // Durch den click hat sich "alert" auf FALSE gedreht
         expect(wrapper.vm.$data.alert).toBeFalse();
-
-        console.log(wrapper.vm.$data.alert);
-        console.log(Object.keys(wrapper.emitted()));
     });
 });
