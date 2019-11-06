@@ -96,11 +96,13 @@ describe('HelloWorld.vue', () => {
         foundPlusButton.trigger('click');
 
         // increment in store is async - so we wait a bit...
-        await new Promise((res) =>
-            setTimeout(() => {
-                expect(true).toBe(true);
-                res();
-            }, 100),
+        await new Promise(
+            (resolve): void => {
+                setTimeout((): void => {
+                    expect(true).toBe(true);
+                    resolve();
+                }, 100);
+            },
         );
 
         // Store has changed!
