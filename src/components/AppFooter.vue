@@ -4,9 +4,12 @@
             <v-col>
                 <v-btn class="mr-3" color="success" small @click="onClickIncrement">+</v-btn>
                 <v-btn class="mr-3" color="error" small v-on:click="onClickDecrement">-</v-btn>
-                <span>Loading... / {{ title_inc || title }} </span>
-                <span v-if="isEven">even</span>
-                <span v-if="count % 2 !== 0">odd</span>
+                <span class="message" :class="{ loaded: state.loaded }">
+                    {{ state.loaded ? 'Loaded!' : 'Loading...' }}
+                </span>
+                {{ title_inc || title }}
+                <span v-if="isEven">(even)</span>
+                <span v-else>(odd)</span>
             </v-col>
             <v-col class="version_block align-end">
                 <span class="version">Version {{ version }}</span>
@@ -18,43 +21,25 @@
 </template>
 
 <script lang="ts">
+import { RootState } from '@/store/interfaces/RootState';
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { namespace } from 'vuex-class';
-// import CounterModule from '../store/modules/CounterModule';
-
-// Weitere Infos:
-//      https://medium.com/@fernalvarez/level-up-your-vuejs-project-with-typescript-part-3-vuex-7ad6333db947
-//      https://github.com/ktsn/vuex-class
-const counterModule = namespace('counterModule');
 
 @Component
 export default class AppFooter extends Vue {
     @Prop({ default: process.env.VUE_APP_TITLE })
     private title!: string;
 
-    @counterModule.Getter
-    private readonly count!: number;
-
-    @counterModule.Action
-    private increment!: (delta: number) => Promise<number>;
-
-    @counterModule.Action
-    private decrement!: (delta: number) => Promise<number>;
-
     // Component methods can be declared as instance methods
     public onClickIncrement(): void {
-        // CounterModule.increment(1);
-        this.increment(1);
+        this.state.counterStore().increment(1);
     }
 
     public onClickDecrement(): void {
-        // CounterModule.decrement(1);
         this.$store.dispatch('counterModule/decrement', 1);
     }
 
     public get title_inc(): string {
-        return `${this.title} + ${this.count}`;
-        // return `${this.title} + ${CounterModule.count}`;
+        return `${this.title} / ${this.state.counterStore().count}`;
     }
 
     public get published(): string {
@@ -66,15 +51,17 @@ export default class AppFooter extends Vue {
     }
 
     public get devmode(): boolean {
-        const devMode =
-            process.env.VUE_APP_DEV_MODE || '<process.env.VUE_APP_DEV_MODE = undefined>';
+        const devMode = process.env.VUE_APP_DEV_MODE || '<process.env.VUE_APP_DEV_MODE = undefined>';
 
         return devMode === 'true';
     }
 
     public get isEven(): boolean {
-        // return CounterModule.count % 2 === 0;
-        return this.count % 2 === 0;
+        return this.state.counterStore().count % 2 === 0;
+    }
+
+    private get state(): RootState {
+        return this.$store.state as RootState;
     }
 }
 </script>
@@ -96,6 +83,14 @@ export default class AppFooter extends Vue {
     .version_block {
         text-align: right;
         font-size: 90%;
+    }
+    .message {
+        color: red;
+        margin-right: 0.5em;
+
+        &.loaded {
+            color: green;
+        }
     }
 }
 </style>

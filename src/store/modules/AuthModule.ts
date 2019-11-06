@@ -7,13 +7,13 @@ export interface Credential {
     password: string;
 }
 
-@Module({ dynamic: true, namespaced: true, name: 'authModule', store })
+@Module({ dynamic: true, namespaced: true, name: AuthModule.NAME, store })
 class AuthModule extends VuexModule {
+    public static readonly NAME = 'authModule';
+
     private readonly logger = LoggerFactory.getLogger('store.AuthModule');
 
-    private readonly credentials: Credential[] = [
-        { username: 'guest4@shiro.at', password: 'guest123B?' },
-    ];
+    private readonly credentials: Credential[] = [{ username: 'guest4@shiro.at', password: 'guest123B?' }];
     private _loggedIn = false;
 
     public get isAuthenticated(): boolean {
@@ -25,9 +25,7 @@ class AuthModule extends VuexModule {
     @Action({ commit: '_login' })
     public async login(payload: Credential): Promise<boolean> {
         const found = this.credentials.find((credential) => {
-            const isEqual =
-                credential.username === payload.username &&
-                credential.password === payload.password;
+            const isEqual = credential.username === payload.username && credential.password === payload.password;
             return isEqual;
         });
 

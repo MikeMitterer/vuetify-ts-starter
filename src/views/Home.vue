@@ -4,27 +4,24 @@
     If you add the fluid prop, your content will occupy the full width of the screen.
      -->
     <v-container class="home">
-        <img alt="Vue logo" class="logo" src="../assets/logo.png" />
+        <v-row>
+            <v-col cols="12" align="center" justify="start">
+                <img alt="Vue logo" class="logo" src="../assets/logo.png" />
+            </v-col>
+        </v-row>
         <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
-        <h3>From Store!</h3>
-        <div>Counter: {{ cnt }}</div>
     </v-container>
 </template>
 
 <script lang="ts">
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import HelloWorld from '@/components/HelloWorld.vue';
 import { Component, Vue } from 'vue-property-decorator';
-import counter from '../store/modules/CounterModule';
 
 @Component({
     components: {
         HelloWorld,
     },
 })
-export default class Home extends Vue {
-    public get cnt(): number {
-        return counter.count;
-    }
-}
+export default class Home extends Vue {}
 </script>
 <style lang="scss"></style>

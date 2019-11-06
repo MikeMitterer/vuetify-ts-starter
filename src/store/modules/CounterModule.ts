@@ -1,9 +1,15 @@
-import { Action, getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators';
-import store from '../index';
+import { CounterStore } from '@/store/interfaces/CounterStore';
+import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
 
-@Module({ dynamic: true, namespaced: true, name: 'counterModule', store })
-class CounterModule extends VuexModule {
-    private _count = 150;
+/**
+ * Remark: Don't use "dynamic: true" and don't import "store"
+ * With this in mind the module is much easier to test
+ */
+@Module({ namespaced: true, name: CounterModule.NAME })
+export default class CounterModule extends VuexModule implements CounterStore {
+    public static readonly NAME = 'counterModule';
+
+    private _count = 15;
 
     public get count(): number {
         return this._count;
@@ -29,8 +35,6 @@ class CounterModule extends VuexModule {
 
     @Mutation
     private _decrement(delta: number): void {
-        this._count -= delta;
+        this._count = Math.min(50, Math.max(0, this._count - delta));
     }
 }
-
-export default getModule(CounterModule);

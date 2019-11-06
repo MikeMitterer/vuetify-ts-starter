@@ -31,7 +31,7 @@
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="primary" @click="login" :disabled="loading">Login</v-btn>
+                        <v-btn color="primary" @click="onLogin" :disabled="loading">Login</v-btn>
                     </v-card-actions>
                 </v-card>
                 <p class="mt-4 font-weight-light">
@@ -45,9 +45,15 @@
 </template>
 
 <script lang="ts">
+import { Credential } from '@/store/modules/AuthModule';
 import { LoggerFactory } from '@mmit/logging';
 import { Component, Vue } from 'vue-property-decorator';
-import auth from '../store/modules/AuthModule';
+import { namespace } from 'vuex-class';
+
+// Weitere Infos:
+//      https://medium.com/@fernalvarez/level-up-your-vuejs-project-with-typescript-part-3-vuex-7ad6333db947
+//      https://github.com/ktsn/vuex-class
+const authModule = namespace('authModule');
 
 @Component
 export default class Login extends Vue {
@@ -57,11 +63,14 @@ export default class Login extends Vue {
     private username: string = '';
     private password: string = '';
 
-    public async login(): Promise<void> {
+    @authModule.Action
+    private login!: (payload: Credential) => Promise<boolean>;
+
+    public async onLogin(): Promise<void> {
         this.logger.info(`Username: ${this.username}, PW: ${this.password}`);
 
         this.loading = true;
-        const success = await auth.login({ username: this.username, password: this.password });
+        const success = await this.login({ username: this.username, password: this.password });
         this.loading = false;
         if (success) {
             await this.$router.push('home');

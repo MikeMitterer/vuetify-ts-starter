@@ -71,6 +71,18 @@
                 </ul>
             </v-col>
             <v-col>
+                <h3 class="from-store">
+                    From Store
+                    <v-btn class="plus" text icon color="green" @click="increment">
+                        <v-icon>mdi-plus-circle-outline</v-icon>
+                    </v-btn>
+                    <v-btn class="minus" text icon color="red" @click="store.decrement(1)">
+                        <v-icon>mdi-minus-circle-outline</v-icon>
+                    </v-btn>
+                </h3>
+                <ul>
+                    <li class="counter">Counter: {{ store.count }}</li>
+                </ul>
                 <h3>Vuetify</h3>
                 <div class="purple darken-2 text-center round">
                     <span class="white--text">Lorem ipsum</span>
@@ -93,13 +105,28 @@
 </template>
 
 <script lang="ts">
+import { CounterStore } from '@/store/interfaces/CounterStore';
+import { RootState } from '@/store/interfaces/RootState';
+import { LoggerFactory } from '@mmit/logging';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component
 export default class HelloWorld extends Vue {
+    private readonly logger = LoggerFactory.getLogger('vuetify-ts-starter.components.HelloWorld');
+
     @Prop() private msg!: string;
 
     public alert: boolean = true;
+
+    public increment(): void {
+        this.logger.debug('Clicked!');
+        this.store.increment(1);
+    }
+
+    // noinspection JSUnusedLocalSymbols
+    private get store(): CounterStore {
+        return (this.$store.state as RootState).counterStore();
+    }
 }
 </script>
 
@@ -121,5 +148,8 @@ li {
 
 a {
     color: #42b983;
+}
+.from-store .v-btn--icon.v-size--default {
+    width: auto;
 }
 </style>

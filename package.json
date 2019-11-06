@@ -18,8 +18,13 @@
         "build:prod": "vue-cli-service build --mode production",
         "deploy": "yarn version --new-version patch"
     },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/MikeMitterer/vuetify-ts-starter"
+    },
     "dependencies": {
         "@mmit/logging": "^0.1.5",
+        "reflect-metadata": "^0.1.13",
         "uuid": "^3.3.3",
         "vue": "^2.6.10",
         "vue-class-component": "^7.1.0",

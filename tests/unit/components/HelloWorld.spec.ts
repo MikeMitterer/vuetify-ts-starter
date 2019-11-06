@@ -1,5 +1,7 @@
 import HelloWorld from '@/components/HelloWorld.vue';
 import { mount, Wrapper } from '@vue/test-utils';
+import { localVue, store } from './_mocks/store';
+
 // import Vue from 'vue';
 // import { VueConstructor } from 'vue/types/vue';
 // import Vuetify from 'vuetify';
@@ -11,27 +13,32 @@ describe('HelloWorld.vue', () => {
     // let localVue: VueConstructor<HelloWorld>;
     // let vuetify: IVuetify;
 
-    const msg = 'new message';
-    let wrapper: Wrapper<HelloWorld>;
+    const startValue = 15;
+    const textForCounter = 'Counter:';
 
-    beforeEach(() => {
-        wrapper = mount(HelloWorld, {
-            // localVue,
-            // vuetify,
-            propsData: { msg },
-        });
-    });
+    const msg = 'new message';
+    let wrapper: Wrapper<HelloWorld> | undefined;
+
+    // beforeEach(() => {
+    // });
 
     afterEach(() => {
-        wrapper.destroy();
+        if (wrapper) {
+            wrapper.destroy();
+            wrapper = undefined;
+        }
     });
 
     test('renders props.msg when passed', () => {
+        wrapper = mount(HelloWorld, { localVue, store, propsData: { msg } });
+
         expect(wrapper.text()).toMatch(msg);
         expect(wrapper.isVueInstance()).toBeTruthy();
     });
 
     test('Button click', () => {
+        wrapper = mount(HelloWorld, { localVue, store, propsData: { msg } });
+
         expect(wrapper.text()).toMatch(msg);
 
         // HTML-Out
@@ -60,5 +67,55 @@ describe('HelloWorld.vue', () => {
 
         // Durch den click hat sich "alert" auf FALSE gedreht
         expect(wrapper.vm.$data.alert).toBeFalse();
+    });
+
+    test('Loaded-State (Store) is by default "true"', async () => {
+        await store.state.counterStore().decrement(1);
+
+        wrapper = mount(HelloWorld, { localVue, store, propsData: { msg } });
+
+        const foundCounter = wrapper.find('.counter');
+        expect(foundCounter.exists()).toBeTrue();
+
+        expect(store.state.counterStore().count).toBe(startValue - 1);
+        expect(foundCounter.text()).toBe(`${textForCounter} ${startValue - 1}`);
+
+        // Set to init state
+        await store.state.counterStore().increment(1);
+    });
+
+    test('Test Button-click', async () => {
+        wrapper = mount(HelloWorld, { localVue, store, propsData: { msg } });
+
+        const foundPlusButton = wrapper.find('.plus');
+
+        expect(foundPlusButton.exists()).toBeTrue();
+
+        expect(store.state.counterStore().count).toBe(startValue);
+
+        foundPlusButton.trigger('click');
+
+        // increment in store is async - so we wait a bit...
+        await new Promise((res) =>
+            setTimeout(() => {
+                expect(true).toBe(true);
+                res();
+            }, 100),
+        );
+
+        // Store has changed!
+        expect(store.state.counterStore().count).toBe(startValue + 1);
+
+        // Re-Render
+        wrapper = mount(HelloWorld, { localVue, store, propsData: { msg } });
+
+        const foundCounter = wrapper.find('.counter');
+        expect(foundCounter.exists()).toBeTrue();
+
+        expect(foundCounter.text()).toBe(`${textForCounter} ${startValue + 1}`);
+
+        // Set to init state
+        await store.state.counterStore().decrement(1);
+        expect(store.state.counterStore().count).toBe(startValue);
     });
 });

@@ -20,7 +20,7 @@
             </v-btn>
             <v-badge style="margin-top: 14px" class="mr-2">
                 <template v-slot:badge>
-                    0
+                    {{ counter }}
                 </template>
                 <v-icon>mdi-email</v-icon>
             </v-badge>
@@ -43,10 +43,11 @@
 </template>
 
 <script lang="ts">
+import { CounterStore } from '@/store/interfaces/CounterStore';
+import { RootState } from '@/store/interfaces/RootState';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import lambi from '../assets/images/lambi.png';
 import auth from '../store/modules/AuthModule';
-import counter from '../store/modules/CounterModule';
 
 @Component
 export default class AppHeader extends Vue {
@@ -57,7 +58,7 @@ export default class AppHeader extends Vue {
     }
 
     public get counter(): number {
-        return Math.min(500, Math.max(110, counter.count));
+        return Math.min(50, Math.max(10, this.store.count));
     }
 
     public get isAuthenticated(): boolean {
@@ -67,6 +68,10 @@ export default class AppHeader extends Vue {
     public async logout(): Promise<void> {
         await auth.logout();
         await this.$router.push('login');
+    }
+
+    private get store(): CounterStore {
+        return (this.$store.state as RootState).counterStore();
     }
 }
 </script>

@@ -1,5 +1,6 @@
 import HelloWorld from '@/components/HelloWorld.vue';
 import { shallowMount, Wrapper } from '@vue/test-utils';
+import { localVue, store } from './_mocks/store';
 // import Vue from 'vue';
 // import { VueConstructor } from 'vue/types/vue';
 // import Vuetify from 'vuetify';
@@ -22,7 +23,8 @@ describe('HelloWorld.vue', () => {
 
         // shallowMount rendert keine Child-Komponenten
         wrapper = shallowMount(HelloWorld, {
-            // localVue,
+            localVue,
+            store,
             // vuetify,
             propsData: { msg },
         });
@@ -36,6 +38,8 @@ describe('HelloWorld.vue', () => {
 
         // shallowMount rendert keine Child-Komponenten
         wrapper = shallowMount(HelloWorld, {
+            localVue,
+            store,
             stubs: {
                 'v-alert': {
                     template: '<div class="v-alert">ALTER-Text</div>',

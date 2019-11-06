@@ -19,6 +19,11 @@ const app = new Vue({
     store,
     vuetify,
 
+    mounted(): void {
+        // noinspection JSIgnoredPromiseFromCall
+        this.$store.dispatch('readyState');
+    },
+
     // tslint:disable-next-line:typedef
     render: (h) => h(App),
 }).$mount('#app');
