@@ -8,9 +8,9 @@
     ]
   },
   "rules": {
-        "no-trailing-whitespace": {
-            "severity": "off"
-        },
+    "no-trailing-whitespace": {
+        "severity": "off"
+    },
 
     "quotemark": [true, "single"],
         "indent": [true, "spaces", 4],
