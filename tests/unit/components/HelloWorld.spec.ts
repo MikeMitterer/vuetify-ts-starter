@@ -9,6 +9,29 @@ import { localVue, store } from './_mocks/store';
 // Vue.config.productionTip = false;
 // Vue.use(Vuetify);
 
+type Tick = () => Promise<void>;
+
+const waitFor = async (ms: number, tick?: Tick): Promise<void> => {
+    const nrOfSteps = 10;
+    const steps = ms / nrOfSteps;
+
+    let counter = 0;
+    let id: NodeJS.Timeout;
+
+    await new Promise((resolve): void => {
+        id = setInterval((): void => {
+            if (tick) {
+                tick();
+            }
+            counter++;
+            if (counter > nrOfSteps) {
+                clearInterval(id);
+                resolve();
+            }
+        }, steps);
+    });
+};
+
 describe('HelloWorld.vue', () => {
     // let localVue: VueConstructor<HelloWorld>;
     // let vuetify: IVuetify;
@@ -36,7 +59,7 @@ describe('HelloWorld.vue', () => {
         expect(wrapper.isVueInstance()).toBeTruthy();
     });
 
-    test('Button click', () => {
+    test('Button click', async () => {
         wrapper = mount(HelloWorld, { localVue, store, propsData: { msg } });
 
         expect(wrapper.text()).toMatch(msg);
@@ -63,6 +86,10 @@ describe('HelloWorld.vue', () => {
         // Data-Property steht per default auf TRUE
         expect(wrapper.vm.$data.alert).toBeTrue();
         foundToggleBtn.trigger('click');
+
+        // Wait for the Transition to be done...
+        await waitFor(100, wrapper?.vm.$nextTick);
+
         expect(foundAlert.isVisible()).toBeFalse();
 
         // Durch den click hat sich "alert" auf FALSE gedreht
@@ -96,14 +123,7 @@ describe('HelloWorld.vue', () => {
         foundPlusButton.trigger('click');
 
         // increment in store is async - so we wait a bit...
-        await new Promise(
-            (resolve): void => {
-                setTimeout((): void => {
-                    expect(true).toBe(true);
-                    resolve();
-                }, 100);
-            },
-        );
+        await waitFor(100);
 
         // Store has changed!
         expect(store.state.counterStore().count).toBe(startValue + 1);
