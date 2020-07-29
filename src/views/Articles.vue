@@ -35,7 +35,7 @@
 import ArticleComponent from '@/components/ArticleComponent.vue';
 import { Article } from '@/model/Article';
 import { LoggerFactory } from '@mmit/logging';
-import uuid from 'uuid';
+import * as uuid from 'uuid';
 import { Component, Vue } from 'vue-property-decorator';
 import crudModule from '../store/modules/CrudModule';
 
