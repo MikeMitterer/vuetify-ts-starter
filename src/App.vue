@@ -49,26 +49,26 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import AppFooter from './components/AppFooter.vue';
-import AppHeader from './components/AppHeader.vue';
+import { Component, Vue } from 'vue-property-decorator'
+import AppFooter from './components/AppFooter.vue'
+import AppHeader from './components/AppHeader.vue'
 
 interface Link {
-    icon: string;
-    text: string;
-    route: string;
+    icon: string
+    text: string
+    route: string
 }
 
 @Component({ components: { AppFooter, AppHeader } })
 export default class App extends Vue {
-    public drawer: boolean = false;
+    public drawer: boolean = false
 
     /** Menü im Drawer */
     public links: Link[] = [
         { icon: 'cactus', text: 'Kaktus', route: '/' },
         { icon: 'cake-layered', text: 'Kuchen', route: '/' },
         { icon: 'bug', text: 'Bug', route: '/about' },
-    ];
+    ]
 }
 </script>
 

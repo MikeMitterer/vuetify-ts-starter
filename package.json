@@ -17,7 +17,8 @@
         "test:integration": "vue-cli-service test:unit --runInBand --detectOpenHandles tests/integration/.*",
         "build": "vue-cli-service build --mode development",
         "build:prod": "vue-cli-service build --mode production",
-        "deploy": "yarn version --new-version patch"
+        "deploy": "yarn version --new-version patch",
+        "clean": "rm -rf lib dist bin doc && jest --clearCache"
     },
     "repository": {
         "type": "git",
@@ -31,23 +32,23 @@
         "vue-class-component": "^7.2.5",
         "vue-property-decorator": "^9.0.0",
         "vue-router": "^3.3.4",
-        "vuetify": "^2.3.6",
+        "vuetify": "^2.3.7",
         "vuetify-loader": "^1.6.0",
         "vuex": "^3.5.1"
     },
     "devDependencies": {
-        "@babel/core": "^7.10.5",
-        "@babel/preset-env": "^7.10.4",
+        "@babel/core": "^7.11.0",
+        "@babel/preset-env": "^7.11.0",
         "@babel/preset-typescript": "^7.10.4",
         "@mdi/font": "^5.4.55",
-        "@types/jest": "26",
+        "@types/jest": "26.0.8",
         "@types/uuid": "^8.0.0",
         "@vue/cli-plugin-typescript": "^4.4.6",
         "@vue/cli-plugin-unit-jest": "^4.4.6",
         "@vue/cli-service": "^4.4.6",
         "@vue/test-utils": "1.0.3",
-        "babel-jest": "26",
-        "jest": "26",
+        "babel-jest": "26.2.2",
+        "jest": "26.2.2",
         "jest-extended": "^0.11.5",
         "moment": "^2.27.0",
         "sass": "^1.26.10",
@@ -59,9 +60,5 @@
         "vue-template-compiler": "^2.6.11",
         "vuex-class": "^0.3.2",
         "vuex-module-decorators": "^0.17.0"
-    },
-    "resolutions": {
-        "@vue/cli-plugin-unit-jest/jest": "24",
-        "@vue/cli-plugin-unit-jest/babel-jest": "24"
     }
 }

@@ -43,35 +43,35 @@
 </template>
 
 <script lang="ts">
-import { CounterStore } from '@/store/interfaces/CounterStore';
-import { RootState } from '@/store/interfaces/RootState';
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import lambi from '../assets/images/lambi.png';
-import auth from '../store/modules/AuthModule';
+import { CounterStore } from '@/store/interfaces/CounterStore'
+import { RootState } from '@/store/interfaces/RootState'
+import { Component, Prop, Vue } from 'vue-property-decorator'
+import lambi from '../assets/images/lambi.png'
+import auth from '../store/modules/AuthModule'
 
 @Component
 export default class AppHeader extends Vue {
-    @Prop() private msg!: string;
+    @Prop() private msg!: string
 
     get img(): string {
-        return lambi;
+        return lambi
     }
 
     public get counter(): number {
-        return Math.min(50, Math.max(10, this.store.count));
+        return Math.min(50, Math.max(10, this.store.count))
     }
 
     public get isAuthenticated(): boolean {
-        return auth.isAuthenticated;
+        return auth.isAuthenticated
     }
 
     public async logout(): Promise<void> {
-        await auth.logout();
-        await this.$router.push('login');
+        await auth.logout()
+        await this.$router.push('login')
     }
 
     private get store(): CounterStore {
-        return (this.$store.state as RootState).counterStore();
+        return (this.$store.state as RootState).counterStore()
     }
 }
 </script>

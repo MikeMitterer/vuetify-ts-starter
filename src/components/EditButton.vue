@@ -5,14 +5,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component
 export default class EditButton extends Vue {
     // private readonly logger = loggerFactory.getLogger('<package>');
 
     @Prop({ default: true })
-    private show!: boolean;
+    private show!: boolean
 }
 </script>
 

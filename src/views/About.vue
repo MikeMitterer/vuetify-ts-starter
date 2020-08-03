@@ -72,19 +72,19 @@
     </v-container>
 </template>
 <script lang="ts">
-import { CounterStore } from '@/store/interfaces/CounterStore';
-import { RootState } from '@/store/interfaces/RootState';
-import { Component, Vue } from 'vue-property-decorator';
+import { CounterStore } from '@/store/interfaces/CounterStore'
+import { RootState } from '@/store/interfaces/RootState'
+import { Component, Vue } from 'vue-property-decorator'
 
 @Component({ components: {} })
 export default class About extends Vue {
     public get published(): string {
-        return process.env.VUE_APP_PUBLISHED || '<process.env.VUE_APP_PUBLISHED = undefined>';
+        return process.env.VUE_APP_PUBLISHED || '<process.env.VUE_APP_PUBLISHED = undefined>'
     }
 
     // noinspection JSUnusedLocalSymbols
     private get store(): CounterStore {
-        return (this.$store.state as RootState).counterStore();
+        return (this.$store.state as RootState).counterStore()
     }
 }
 </script>

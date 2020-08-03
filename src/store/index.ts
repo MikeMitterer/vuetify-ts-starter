@@ -1,14 +1,14 @@
-import { CounterStore } from '@/store/interfaces/CounterStore';
-import { RootState } from '@/store/interfaces/RootState';
-import CounterModule from '@/store/modules/CounterModule';
-import { isNotRegistered } from '@/store/utils';
-import Vue from 'vue';
-import Vuex, { ActionContext, ActionTree, MutationTree } from 'vuex';
-import { getModule } from 'vuex-module-decorators';
+import { CounterStore } from '@/store/interfaces/CounterStore'
+import { RootState } from '@/store/interfaces/RootState'
+import CounterModule from '@/store/modules/CounterModule'
+import { isNotRegistered } from '@/store/utils'
+import Vue from 'vue'
+import Vuex, { ActionContext, ActionTree, MutationTree } from 'vuex'
+import { getModule } from 'vuex-module-decorators'
 
 // import gameModule from './modules/GameModule';
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 const state: RootState = {
     loaded: false,
@@ -17,12 +17,12 @@ const state: RootState = {
         if (isNotRegistered(CounterModule.NAME, store)) {
             // console.log('Register jobModule...');
             // registerModule src: http://bit.ly/34uLFBk
-            store.registerModule(CounterModule.NAME, CounterModule);
+            store.registerModule(CounterModule.NAME, CounterModule)
         }
         // getModule src: http://bit.ly/2CfpLWQ
-        return getModule(CounterModule, store);
+        return getModule(CounterModule, store)
     },
-};
+}
 
 /**
  * Actions can be asynchronous.
@@ -42,10 +42,10 @@ const actions: ActionTree<RootState, RootState> = {
     async readyState(context: ActionContext<RootState, RootState>, payload: undefined): Promise<void> {
         // Simulate loading time...
         setTimeout(() => {
-            context.commit('readyState', true);
-        }, 1500);
+            context.commit('readyState', true)
+        }, 1500)
     },
-};
+}
 
 /**
  * Mutations are synchronous
@@ -55,9 +55,9 @@ const actions: ActionTree<RootState, RootState> = {
 const mutations: MutationTree<RootState> = {
     readyState(status: RootState, payload): void {
         // logger.info(`readyState - Mutation`);
-        status.loaded = true;
+        status.loaded = true
     },
-};
+}
 
 const store = new Vuex.Store<RootState>({
     state,
@@ -66,6 +66,6 @@ const store = new Vuex.Store<RootState>({
     // modules: {
     //     gameModule,
     // },
-});
+})
 
-export default store;
+export default store

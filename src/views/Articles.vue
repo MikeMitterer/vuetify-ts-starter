@@ -32,59 +32,59 @@
     </v-container>
 </template>
 <script lang="ts">
-import ArticleComponent from '@/components/ArticleComponent.vue';
-import { Article } from '@/model/Article';
-import { LoggerFactory } from '@mmit/logging';
-import * as uuid from 'uuid';
-import { Component, Vue } from 'vue-property-decorator';
-import crudModule from '../store/modules/CrudModule';
+import ArticleComponent from '@/components/ArticleComponent.vue'
+import { Article } from '@/model/Article'
+import { LoggerFactory } from '@mmit/logging'
+import * as uuid from 'uuid'
+import { Component, Vue } from 'vue-property-decorator'
+import crudModule from '../store/modules/CrudModule'
 
 @Component({ components: { ArticleComponent } })
 export default class Articles extends Vue {
-    private readonly logger = LoggerFactory.getLogger('views.Articles');
+    private readonly logger = LoggerFactory.getLogger('views.Articles')
 
     public get articles(): readonly Article[] {
-        return crudModule.articles;
+        return crudModule.articles
     }
 
-    private changes = 0;
+    private changes = 0
 
     // Reaktives property darf NICHT undefined sein und darf nicht mit einem _ beginnen
-    private item: Article | '' | undefined = '';
+    private item: Article | '' | undefined = ''
 
     protected get isInAddMode(): boolean {
-        return typeof this.item === 'object';
+        return typeof this.item === 'object'
     }
 
     public addItem(): void {
-        this.item = { id: uuid.v4(), description: `Change me ${this.changes}`, price: 0 };
-        this.changes++;
+        this.item = { id: uuid.v4(), description: `Change me ${this.changes}`, price: 0 }
+        this.changes++
         // this.$forceUpdate();
     }
 
     // noinspection JSUnusedLocalSymbols
     private onSaveItem(): void {
         if (this.item) {
-            crudModule.add({ ...this.item });
+            crudModule.add({ ...this.item })
         }
-        this.item = undefined;
+        this.item = undefined
     }
 
     // noinspection JSUnusedLocalSymbols
     private onCancel(): void {
-        this.logger.info('Cancel');
-        this.item = undefined;
+        this.logger.info('Cancel')
+        this.item = undefined
     }
 
     // noinspection JSUnusedLocalSymbols
     private onDelete(id: string): void {
-        this.logger.info(`Delete ITEM: ${id}`);
-        crudModule.delete(id);
+        this.logger.info(`Delete ITEM: ${id}`)
+        crudModule.delete(id)
     }
 
     // noinspection JSUnusedLocalSymbols
     private onTestClick(id: string): void {
-        this.logger.info(`Test-Click`);
+        this.logger.info(`Test-Click`)
     }
 }
 </script>

@@ -21,47 +21,47 @@
 </template>
 
 <script lang="ts">
-import { RootState } from '@/store/interfaces/RootState';
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { RootState } from '@/store/interfaces/RootState'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component
 export default class AppFooter extends Vue {
     @Prop({ default: process.env.VUE_APP_TITLE })
-    private title!: string;
+    private title!: string
 
     // Component methods can be declared as instance methods
     public onClickIncrement(): void {
-        this.state.counterStore().increment(1);
+        this.state.counterStore().increment(1)
     }
 
     public onClickDecrement(): void {
-        this.$store.dispatch('counterModule/decrement', 1);
+        this.$store.dispatch('counterModule/decrement', 1)
     }
 
     public get title_inc(): string {
-        return `${this.title} / ${this.state.counterStore().count}`;
+        return `${this.title} / ${this.state.counterStore().count}`
     }
 
     public get published(): string {
-        return process.env.VUE_APP_PUBLISHED || '<process.env.VUE_APP_PUBLISHED = undefined>';
+        return process.env.VUE_APP_PUBLISHED || '<process.env.VUE_APP_PUBLISHED = undefined>'
     }
 
     public get version(): string {
-        return process.env.VUE_APP_VERSION || '<process.env.VUE_APP_VERSION = undefined>';
+        return process.env.VUE_APP_VERSION || '<process.env.VUE_APP_VERSION = undefined>'
     }
 
     public get devmode(): boolean {
-        const devMode = process.env.VUE_APP_DEV_MODE || '<process.env.VUE_APP_DEV_MODE = undefined>';
+        const devMode = process.env.VUE_APP_DEV_MODE || '<process.env.VUE_APP_DEV_MODE = undefined>'
 
-        return devMode === 'true';
+        return devMode === 'true'
     }
 
     public get isEven(): boolean {
-        return this.state.counterStore().count % 2 === 0;
+        return this.state.counterStore().count % 2 === 0
     }
 
     private get state(): RootState {
-        return this.$store.state as RootState;
+        return this.$store.state as RootState
     }
 }
 </script>

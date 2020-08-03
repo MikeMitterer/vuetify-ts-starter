@@ -1,7 +1,7 @@
 export interface CounterStore {
-    count: number;
+    count: number
 
-    increment(delta: number): Promise<number>;
+    increment(delta: number): Promise<number>
 
-    decrement(delta: number): Promise<number>;
+    decrement(delta: number): Promise<number>
 }

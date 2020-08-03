@@ -1,18 +1,18 @@
-import Vue from 'vue';
-import Router from 'vue-router';
-import auth from './store/modules/AuthModule';
-import Home from './views/Home.vue';
+import Vue from 'vue'
+import Router from 'vue-router'
+import auth from './store/modules/AuthModule'
+import Home from './views/Home.vue'
 
-Vue.use(Router);
+Vue.use(Router)
 
 // tslint:disable-next-line:no-any
 const ifAuthenticated = (to: any, from: any, next: any): void => {
     if (auth.isAuthenticated) {
-        next();
-        return;
+        next()
+        return
     }
-    next('/login');
-};
+    next('/login')
+}
 
 export default new Router({
     mode: 'history',
@@ -59,4 +59,4 @@ export default new Router({
         },
         { path: '*', redirect: '/' },
     ],
-});
+})

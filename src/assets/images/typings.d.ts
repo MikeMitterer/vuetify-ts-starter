@@ -9,18 +9,18 @@
 
 /** Import all PNGs */
 declare module '*.png' {
-    const valuePng: string;
-    export = valuePng;
+    const valuePng: string
+    export = valuePng
 }
 
 /** Import all JPGs */
 declare module '*.jpg' {
-    const valueJPG: string;
-    export = valueJPG;
+    const valueJPG: string
+    export = valueJPG
 }
 
 /** Import all GIFs */
 declare module '*.gif' {
-    const valueGIF: string;
-    export = valueGIF;
+    const valueGIF: string
+    export = valueGIF
 }

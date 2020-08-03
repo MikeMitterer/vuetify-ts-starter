@@ -1,8 +1,8 @@
-import { CounterStore } from '@/store/interfaces/CounterStore';
+import { CounterStore } from '@/store/interfaces/CounterStore'
 
-type StoreProvider<T> = () => T;
+type StoreProvider<T> = () => T
 
 export interface RootState {
-    loaded: boolean;
-    counterStore: StoreProvider<CounterStore>;
+    loaded: boolean
+    counterStore: StoreProvider<CounterStore>
 }

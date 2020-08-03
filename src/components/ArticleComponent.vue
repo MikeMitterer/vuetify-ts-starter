@@ -92,73 +92,73 @@
 </template>
 
 <script lang="ts">
-import EditButton from '@/components/EditButton.vue';
-import { Article } from '@/model/Article';
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
+import EditButton from '@/components/EditButton.vue'
+import { Article } from '@/model/Article'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
 interface Section {
-    Undefined: number;
-    Description: number;
-    Price: number;
+    Undefined: number
+    Description: number
+    Price: number
 }
 
-type EditSection = keyof Section;
+type EditSection = keyof Section
 @Component({ components: { EditButton } })
 export default class ArticleComponent extends Vue {
     private static readonly sections: Section = {
         Undefined: -1,
         Description: 0,
         Price: 1,
-    };
+    }
 
     @Prop({ default: '' })
-    private article: Article | undefined;
+    private article: Article | undefined
 
     @Prop({ default: false })
-    private addMode!: boolean;
+    private addMode!: boolean
 
     /**
      * Wenn in der Artikelliste der jeweilige (dieser) Artikel angeklickt wurde
      */
     @Prop({ default: false })
-    private isActive!: boolean;
+    private isActive!: boolean
 
     /**
      * Definiert welches Element aktiv ist
      */
-    private toggle: number = -1;
+    private toggle: number = -1
 
-    private tempArticle: Article | '' = '';
+    private tempArticle: Article | '' = ''
 
     @Watch('isActive')
     private onIsActiveChanged(val: boolean, _: boolean): void {
         if (!val) {
-            this.toggle = -1;
+            this.toggle = -1
         }
     }
 
     // noinspection JSUnusedLocalSymbols
     private onEdit(section: EditSection): void {
-        this.tempArticle = Object.assign(this.tempArticle, this.article);
+        this.tempArticle = Object.assign(this.tempArticle, this.article)
 
         if (!this.isActive) {
-            this.$emit('activate');
+            this.$emit('activate')
         }
 
-        this.toggle = ArticleComponent.sections[section];
+        this.toggle = ArticleComponent.sections[section]
     }
 
     // noinspection JSUnusedLocalSymbols
     private onCancel(): void {
-        this.tempArticle = '';
-        this.$emit('activate', false);
+        this.tempArticle = ''
+        this.$emit('activate', false)
     }
 
     // noinspection JSUnusedLocalSymbols
     private onSave(): void {
-        this.article = Object.assign(this.article, this.tempArticle);
-        this.tempArticle = '';
-        this.$emit('activate', false);
+        this.article = Object.assign(this.article, this.tempArticle)
+        this.tempArticle = ''
+        this.$emit('activate', false)
     }
 }
 </script>

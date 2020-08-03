@@ -45,35 +45,35 @@
 </template>
 
 <script lang="ts">
-import { Credential } from '@/store/modules/AuthModule';
-import { LoggerFactory } from '@mmit/logging';
-import { Component, Vue } from 'vue-property-decorator';
-import { namespace } from 'vuex-class';
+import { Credential } from '@/store/modules/AuthModule'
+import { LoggerFactory } from '@mmit/logging'
+import { Component, Vue } from 'vue-property-decorator'
+import { namespace } from 'vuex-class'
 
 // Weitere Infos:
 //      https://medium.com/@fernalvarez/level-up-your-vuejs-project-with-typescript-part-3-vuex-7ad6333db947
 //      https://github.com/ktsn/vuex-class
-const authModule = namespace('authModule');
+const authModule = namespace('authModule')
 
 @Component
 export default class Login extends Vue {
-    private readonly logger = LoggerFactory.getLogger('views.Login');
+    private readonly logger = LoggerFactory.getLogger('views.Login')
 
-    private loading: boolean = false;
-    private username: string = '';
-    private password: string = '';
+    private loading: boolean = false
+    private username: string = ''
+    private password: string = ''
 
     @authModule.Action
-    private login!: (payload: Credential) => Promise<boolean>;
+    private login!: (payload: Credential) => Promise<boolean>
 
     public async onLogin(): Promise<void> {
-        this.logger.info(`Username: ${this.username}, PW: ${this.password}`);
+        this.logger.info(`Username: ${this.username}, PW: ${this.password}`)
 
-        this.loading = true;
-        const success = await this.login({ username: this.username, password: this.password });
-        this.loading = false;
+        this.loading = true
+        const success = await this.login({ username: this.username, password: this.password })
+        this.loading = false
         if (success) {
-            await this.$router.push('home');
+            await this.$router.push('home')
         }
     }
 }

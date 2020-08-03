@@ -6,23 +6,23 @@
     </v-container>
 </template>
 <script lang="ts">
-import { Article } from '@/model/Article';
-import { Component, Vue } from 'vue-property-decorator';
-import crudModule from '../store/modules/CrudModule';
+import { Article } from '@/model/Article'
+import { Component, Vue } from 'vue-property-decorator'
+import crudModule from '../store/modules/CrudModule'
 
 @Component({ components: {} })
 export default class ArticleView extends Vue {
     private get articles(): readonly Article[] {
-        return crudModule.articles;
+        return crudModule.articles
     }
 
     public forID(): Article {
-        const id = this.$route.params.id;
-        const found = this.articles.find((article) => article.id === id);
+        const id = this.$route.params.id
+        const found = this.articles.find((article) => article.id === id)
         if (!found) {
-            throw new Error(`Article with ID '${id}' is not in list!`);
+            throw new Error(`Article with ID '${id}' is not in list!`)
         }
-        return found;
+        return found
     }
 }
 </script>

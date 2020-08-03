@@ -1,4 +1,4 @@
-import Vue, { VNode } from 'vue';
+import Vue, { VNode } from 'vue'
 
 declare global {
     namespace JSX {
@@ -10,7 +10,7 @@ declare global {
 
         interface IntrinsicElements {
             // tslint:disable-next-line:no-any
-            [elem: string]: any;
+            [elem: string]: any
         }
     }
 }

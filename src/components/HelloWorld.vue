@@ -105,27 +105,27 @@
 </template>
 
 <script lang="ts">
-import { CounterStore } from '@/store/interfaces/CounterStore';
-import { RootState } from '@/store/interfaces/RootState';
-import { LoggerFactory } from '@mmit/logging';
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { CounterStore } from '@/store/interfaces/CounterStore'
+import { RootState } from '@/store/interfaces/RootState'
+import { LoggerFactory } from '@mmit/logging'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component
 export default class HelloWorld extends Vue {
-    private readonly logger = LoggerFactory.getLogger('vuetify-ts-starter.components.HelloWorld');
+    private readonly logger = LoggerFactory.getLogger('vuetify-ts-starter.components.HelloWorld')
 
-    @Prop() private msg!: string;
+    @Prop() private msg!: string
 
-    public alert: boolean = true;
+    public alert: boolean = true
 
     public increment(): void {
-        this.logger.debug('Clicked!');
-        this.store.increment(1);
+        this.logger.debug('Clicked!')
+        this.store.increment(1)
     }
 
     // noinspection JSUnusedLocalSymbols
     private get store(): CounterStore {
-        return (this.$store.state as RootState).counterStore();
+        return (this.$store.state as RootState).counterStore()
     }
 }
 </script>
