@@ -26,8 +26,6 @@
 
         "max-classes-per-file": false,
 
-        "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"],
-
         "member-ordering": [
             true,
             {
@@ -45,6 +43,12 @@
             }
         ],
 
-        "typedef": [true, "call-signature", "arrow-call-signature", "property-declaration"]
+        "semicolon": [true, "never"],
+
+        "trailing-comma": [true, { "esSpecCompliant": true }],
+        
+        "typedef": [true, "call-signature", "arrow-call-signature", "property-declaration"],
+
+        "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"]
     }
 }
