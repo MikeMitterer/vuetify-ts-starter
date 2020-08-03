@@ -7,6 +7,7 @@
         "typescript vue"
     ],
     "private": true,
+    "license": "UNLICENSED",
     "scripts": {
         "start": "vue-cli-service serve --mode development --open",
         "tc": "tsc --noEmit",

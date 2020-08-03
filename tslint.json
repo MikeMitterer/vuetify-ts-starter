@@ -1,29 +1,30 @@
 {
+    "extends": ["tslint:recommended"],
+
     "defaultSeverity": "error",
 
-    "extends": ["tslint:recommended"],
-  "linterOptions": {
-    "exclude": [
-      "node_modules/**"
-    ]
-  },
-  "rules": {
-    "no-trailing-whitespace": {
-        "severity": "off"
+    "linterOptions": {
+      "exclude": [
+        "node_modules/**"
+      ]
     },
 
-    "quotemark": [true, "single"],
-        "indent": [true, "spaces", 4],
-    "interface-name": false,
+    "rules": {
+        "no-trailing-whitespace": {  "severity": "off"  },
 
-    "object-literal-sort-keys": false,
+        "quotemark": [true, "single"],
+
+        "indent": [true, "spaces", 4],
+
+        "interface-name": false,
+
+        "object-literal-sort-keys": false,
+
         "no-any": true,
 
         "no-consecutive-blank-lines": false,
 
         "max-classes-per-file": false,
-
-        "semicolon": [true, "always", "ignore-bound-class-methods"],
 
         "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"],
 
@@ -45,5 +46,5 @@
         ],
 
         "typedef": [true, "call-signature", "arrow-call-signature", "property-declaration"]
-  }
+    }
 }
