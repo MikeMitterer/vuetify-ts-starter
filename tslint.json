@@ -47,7 +47,7 @@
 
         "trailing-comma": [true, { "esSpecCompliant": true }],
         
-        "typedef": [true, "call-signature", "arrow-call-signature", "property-declaration"],
+        "typedef": [true, "call-signature", "property-declaration"],
 
         "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"]
     }

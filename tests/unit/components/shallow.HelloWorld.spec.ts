@@ -8,17 +8,17 @@ import { localVue, store } from './_mocks/store'
 // Vue.config.productionTip = false;
 // Vue.use(Vuetify);
 
-describe('HelloWorld.vue', () => {
+describe('HelloWorld.vue', (): void => {
     let wrapper: Wrapper<HelloWorld> | undefined
 
-    afterEach(() => {
+    afterEach((): void => {
         if (wrapper) {
             wrapper.destroy()
             wrapper = undefined
         }
     })
 
-    test('renders props.msg when passed', () => {
+    test('renders props.msg when passed', (): void => {
         const msg = 'new message'
 
         // shallowMount rendert keine Child-Komponenten
@@ -33,7 +33,7 @@ describe('HelloWorld.vue', () => {
         // expect(wrapper.isVueInstance()).toBeTruthy();
     })
 
-    test('simulate v-btn', () => {
+    test('simulate v-btn', (): void => {
         const msg = 'new message'
 
         // shallowMount rendert keine Child-Komponenten

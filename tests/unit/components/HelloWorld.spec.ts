@@ -18,7 +18,7 @@ const waitFor = async (ms: number, tick?: Tick): Promise<void> => {
     let counter = 0
     let id: NodeJS.Timeout
 
-    await new Promise((resolve): void => {
+    await new Promise<void>((resolve): void => {
         id = setInterval((): void => {
             if (tick) {
                 tick()
@@ -32,7 +32,7 @@ const waitFor = async (ms: number, tick?: Tick): Promise<void> => {
     })
 }
 
-describe('HelloWorld.vue', () => {
+describe('HelloWorld.vue', (): void => {
     // let localVue: VueConstructor<HelloWorld>;
     // let vuetify: IVuetify;
 
@@ -45,21 +45,21 @@ describe('HelloWorld.vue', () => {
     // beforeEach(() => {
     // });
 
-    afterEach(() => {
+    afterEach((): void => {
         if (wrapper) {
             wrapper.destroy()
             wrapper = undefined
         }
     })
 
-    test('renders props.msg when passed', () => {
+    test('renders props.msg when passed', (): void => {
         wrapper = mount(HelloWorld, { localVue, store, propsData: { msg } })
 
         expect(wrapper.text()).toMatch(msg)
         // expect(wrapper.isVueInstance()).toBeTruthy();
     })
 
-    test('Button click', async () => {
+    test('Button click', async (): Promise<void> => {
         wrapper = mount(HelloWorld, { localVue, store, propsData: { msg } })
 
         expect(wrapper.text()).toMatch(msg)
@@ -96,7 +96,7 @@ describe('HelloWorld.vue', () => {
         expect(wrapper.vm.$data.alert).toBeFalse()
     })
 
-    test('Loaded-State (Store) is by default "true"', async () => {
+    test('Loaded-State (Store) is by default "true"', async (): Promise<void> => {
         await store.state.counterStore().decrement(1)
 
         wrapper = mount(HelloWorld, { localVue, store, propsData: { msg } })
@@ -111,7 +111,7 @@ describe('HelloWorld.vue', () => {
         await store.state.counterStore().increment(1)
     })
 
-    test('Test Button-click', async () => {
+    test('Test Button-click', async (): Promise<void> => {
         wrapper = mount(HelloWorld, { localVue, store, propsData: { msg } })
 
         const foundPlusButton = wrapper.find('.plus')
