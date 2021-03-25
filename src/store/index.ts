@@ -1,6 +1,8 @@
 import { CounterStore } from '@/store/interfaces/CounterStore'
 import { RootState } from '@/store/interfaces/RootState'
+import { webSocketStore, WebSocketStore } from '@/store/interfaces/WebSocketStore'
 import CounterModule from '@/store/modules/CounterModule'
+import WebSocketModule from '@/store/modules/WebSocketModule'
 import { isNotRegistered } from '@/store/utils'
 import Vue from 'vue'
 import Vuex, { ActionContext, ActionTree, MutationTree } from 'vuex'
@@ -12,6 +14,16 @@ Vue.use(Vuex)
 
 const state: RootState = {
     loaded: false,
+
+    webSocketStore: (): WebSocketStore => {
+        if (isNotRegistered(webSocketStore.NAME, store)) {
+            // console.log('Register jobModule...');
+            // registerModule src: http://bit.ly/34uLFBk
+            store.registerModule(webSocketStore.NAME, WebSocketModule)
+        }
+        // getModule src: http://bit.ly/2CfpLWQ
+        return getModule(WebSocketModule, store)
+    },
 
     counterStore: (): CounterStore => {
         if (isNotRegistered(CounterModule.NAME, store)) {
@@ -40,10 +52,11 @@ const actions: ActionTree<RootState, RootState> = {
      * @param payload
      */
     async readyState(context: ActionContext<RootState, RootState>, payload: undefined): Promise<void> {
-        // Simulate loading time...
-        setTimeout(() => {
-            context.commit('readyState', true)
-        }, 1500)
+
+        await context.state.webSocketStore().init()
+        await context.state.counterStore().init()
+
+        context.commit('readyState', true)
     },
 }
 

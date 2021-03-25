@@ -1,8 +1,10 @@
 import { CounterStore } from '@/store/interfaces/CounterStore'
+import { WebSocketStore } from '@/store/interfaces/WebSocketStore'
 
 type StoreProvider<T> = () => T
 
 export interface RootState {
     loaded: boolean
     counterStore: StoreProvider<CounterStore>
+    webSocketStore: StoreProvider<WebSocketStore>
 }

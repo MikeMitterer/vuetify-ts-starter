@@ -11,7 +11,7 @@ export interface Credential {
 class AuthModule extends VuexModule {
     public static readonly NAME = 'authModule'
 
-    private readonly logger = LoggerFactory.getLogger('store.AuthModule')
+    private readonly logger = LoggerFactory.getLogger('vuetify-ts-starter.store.AuthModule')
 
     private readonly credentials: Credential[] = [{ username: 'guest4@shiro.at', password: 'guest123B?' }]
     private _loggedIn = false

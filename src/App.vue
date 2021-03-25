@@ -39,9 +39,9 @@
                 </v-list-item>
             </v-list>
         </v-navigation-drawer>
-        <v-content>
+        <v-main>
             <router-view />
-        </v-content>
+        </v-main>
         <AppFooter title="Mike"></AppFooter>
         <!--        <v-footer fixed dark>Hallo TEST</v-footer>-->
         <!--    </div>-->

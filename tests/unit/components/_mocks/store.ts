@@ -1,6 +1,8 @@
 import { CounterStore } from '@/store/interfaces/CounterStore'
 import { RootState } from '@/store/interfaces/RootState'
+import { webSocketStore, WebSocketStore } from '@/store/interfaces/WebSocketStore'
 import CounterModule from '@/store/modules/CounterModule'
+import WebSocketModule from '@/store/modules/WebSocketModule'
 import { isNotRegistered } from '@/store/utils'
 import { LoggerFactory } from '@mmit/logging'
 import { createLocalVue } from '@vue/test-utils'
@@ -15,6 +17,16 @@ localVue.use(Vuex)
 
 const state: RootState = {
     loaded: true,
+
+    webSocketStore: (): WebSocketStore => {
+        if (isNotRegistered(webSocketStore.NAME, store)) {
+            // console.log('Register jobModule...');
+            // registerModule src: http://bit.ly/34uLFBk
+            store.registerModule(webSocketStore.NAME, WebSocketModule)
+        }
+        // getModule src: http://bit.ly/2CfpLWQ
+        return getModule(WebSocketModule, store)
+    },
 
     counterStore: (): CounterStore => {
         const logger = LoggerFactory.getLogger('test.unit.components._mocks.store.counterStore')
