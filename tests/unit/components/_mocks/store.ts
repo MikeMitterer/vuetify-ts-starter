@@ -1,6 +1,8 @@
+import { appStore, AppStore } from '@/store/interfaces/AppStore'
 import { CounterStore } from '@/store/interfaces/CounterStore'
 import { RootState } from '@/store/interfaces/RootState'
 import { webSocketStore, WebSocketStore } from '@/store/interfaces/WebSocketStore'
+import AppModule from '@/store/modules/AppModule'
 import CounterModule from '@/store/modules/CounterModule'
 import WebSocketModule from '@/store/modules/WebSocketModule'
 import { isNotRegistered } from '@/store/utils'
@@ -33,11 +35,16 @@ const state: RootState = {
 
         if (isNotRegistered(CounterModule.NAME, store)) {
             logger.debug('Register jobModule...')
-            // registerModule src: http://bit.ly/34uLFBk
             store.registerModule(CounterModule.NAME, CounterModule)
         }
-        // getModule src: http://bit.ly/2CfpLWQ
         return getModule(CounterModule, store)
+    },
+
+    appStore: (): AppStore => {
+        if (isNotRegistered(appStore.NAME, store)) {
+            store.registerModule(appStore.NAME, AppModule)
+        }
+        return getModule(AppModule, store)
     },
 }
 

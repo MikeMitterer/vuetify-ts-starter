@@ -1,3 +1,4 @@
+import { app } from '@/main'
 import { CounterStore } from '@/store/interfaces/CounterStore'
 import { LoggerFactory, LogLevel } from '@mmit/logging'
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
@@ -23,6 +24,7 @@ export default class CounterModule extends VuexModule implements CounterStore {
     @Action({ commit: '_init'})
     public async init(): Promise<void> {
         this.logger.info('CounterModule initializing...')
+
     }
 
     // action 'increment' commits mutation '_increment' when done with return value as payload

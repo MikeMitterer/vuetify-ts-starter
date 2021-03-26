@@ -2,8 +2,12 @@
     <v-footer fixed dark>
         <v-row class="mb-6" no-gutters>
             <v-col>
-                <v-btn class="mr-3" color="success" small @click="onClickIncrement">+</v-btn>
-                <v-btn class="mr-3" color="error" small v-on:click="onClickDecrement">-</v-btn>
+                <v-btn color="success" text icon @click="onClickIncrement">
+                    <v-icon>mdi-plus-circle-outline</v-icon>
+                </v-btn>
+                <v-btn color="error" text icon  v-on:click="onClickDecrement">
+                    <v-icon>mdi-minus-circle-outline</v-icon>
+                </v-btn>
                 <span class="message" :class="{ loaded: state.loaded }">
                     {{ state.loaded ? 'Loaded!' : 'Loading...' }}
                 </span>
@@ -72,6 +76,7 @@ export default class AppFooter extends Vue {
     z-index: 4;
 
     .row {
+        align-items: center;
         margin: 0 !important;
         padding: 0;
     }
@@ -82,7 +87,7 @@ export default class AppFooter extends Vue {
 
     .version_block {
         text-align: right;
-        font-size: 90%;
+        font-size: 80%;
     }
     .message {
         color: red;

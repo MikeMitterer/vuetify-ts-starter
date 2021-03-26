@@ -1,6 +1,8 @@
+import { appStore, AppStore } from '@/store/interfaces/AppStore'
 import { CounterStore } from '@/store/interfaces/CounterStore'
 import { RootState } from '@/store/interfaces/RootState'
 import { webSocketStore, WebSocketStore } from '@/store/interfaces/WebSocketStore'
+import AppModule from '@/store/modules/AppModule'
 import CounterModule from '@/store/modules/CounterModule'
 import WebSocketModule from '@/store/modules/WebSocketModule'
 import { isNotRegistered } from '@/store/utils'
@@ -27,12 +29,16 @@ const state: RootState = {
 
     counterStore: (): CounterStore => {
         if (isNotRegistered(CounterModule.NAME, store)) {
-            // console.log('Register jobModule...');
-            // registerModule src: http://bit.ly/34uLFBk
             store.registerModule(CounterModule.NAME, CounterModule)
         }
-        // getModule src: http://bit.ly/2CfpLWQ
         return getModule(CounterModule, store)
+    },
+
+    appStore: (): AppStore => {
+        if (isNotRegistered(appStore.NAME, store)) {
+            store.registerModule(appStore.NAME, AppModule)
+        }
+        return getModule(AppModule, store)
     },
 }
 
@@ -54,7 +60,10 @@ const actions: ActionTree<RootState, RootState> = {
     async readyState(context: ActionContext<RootState, RootState>, payload: undefined): Promise<void> {
 
         await context.state.webSocketStore().init()
+
         await context.state.counterStore().init()
+
+        await context.state.appStore().init()
 
         context.commit('readyState', true)
     },

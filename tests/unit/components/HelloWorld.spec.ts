@@ -16,7 +16,9 @@ const waitFor = async (ms: number, tick?: Tick): Promise<void> => {
     const steps = ms / nrOfSteps
 
     let counter = 0
-    let id: NodeJS.Timeout
+    
+    // tslint:disable-next-line:no-any
+    let id: any
 
     await new Promise<void>((resolve): void => {
         id = setInterval((): void => {

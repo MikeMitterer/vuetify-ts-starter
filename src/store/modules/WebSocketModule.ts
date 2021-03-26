@@ -1,8 +1,11 @@
+import { app } from '@/main'
+import { RootState } from '@/store/interfaces/RootState'
 import { WebSocketStore, webSocketStore } from '@/store/interfaces/WebSocketStore'
 import { getWebSocketServe } from '@/store/utils/WebSocketServer'
 import { LoggerFactory, LogLevel } from '@mmit/logging'
 
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
+import { SettingsStore } from '../../../../../../Production/mobiad/packages/ui/mobicast/src/store/interfaces/SettingsStore'
 
 import store from '../index'
 
@@ -23,57 +26,65 @@ export default class WebSocketModule extends VuexModule implements WebSocketStor
      */
     @Action({ commit: '_init' })
     public async init(): Promise<void> {
-        const webSocketUrl = getWebSocketServe().url
+        try {
+            const webSocketUrl = getWebSocketServe().url
+            let timerID: ReturnType<typeof setInterval> | undefined
 
-        this.logger.info('WebSocketModule initializing...', webSocketUrl)
+            this.logger.info('WebSocketModule initializing...', webSocketUrl)
 
-        // const webSocketService = createWebSocket({ url: webSocketUrl})
-        // const connection = new Connection(sysInfo.server.host, sysInfo.server.port, {
-        //     scheme:
-        //         sysInfo.server.protocol === 'http' || sysInfo.server.protocol === 'ws'
-        //             ? 'http'
-        //             : 'https'
-        // })
-        // const actionBus = ActionBus.getInstance()
-        // const logErrorMessage = (e: unknown) => {
-        //     this.logger.error(
-        //         `Failed to connect to ${sysInfo.server.baseUrl} with ${(e as Error).message}`!
-        //     )
-        // }
-        //
-        // const autoReconnect = prepareAutoConnection(
-        //     connection,
-        //     webSocketService,
-        //     sysInfo.server.baseUrl
-        // )
-        //
-        // webSocketService.onJson = (eventName, event): void => {
-        //     this.logger.info(`JSON-Payload: `, event)
-        //     actionBus.fire(event)
-        // }
-        //
-        // webSocketService.onMessage = (message): void => {
-        //     this.logger.info(`Message-Payload: `, message)
-        // }
-        //
-        // webSocketService.onOpen = (): void => {
-        //     this.logger.info(`Connected to ${sysInfo.server.wsUrl}...`)
-        //
-        //     this.connectionState('connected')
-        //     actionBus.fire(new ApplicationConnectedAction())
-        // }
-        // webSocketService.onClose = (): void => {
-        //     this.logger.warn(`Connection to ${sysInfo.server.wsUrl} closed by server!`)
-        //
-        //     this.connectionState('disconnected')
-        //     actionBus.fire(new ApplicationDisConnectedAction())
-        //     autoReconnect(logErrorMessage)
-        // }
-        //
-        // autoReconnect(logErrorMessage)
-        // if (await connection.isAvailable()) {
-        //     await webSocketService.connect()
-        // }
+            let webSocket: WebSocket
+            let isConnecting = false
+
+            const autoConnect = async () => {
+                if (typeof timerID !== 'undefined') {
+                    clearInterval(timerID)
+                    timerID = undefined
+                }
+                timerID = setInterval(() => {
+                    if (webSocket === undefined && !isConnecting) {
+                        isConnecting = true
+                        connect()
+                    }
+                }, 1000)
+            }
+
+            const connect = async () => {
+                webSocket = new WebSocket(webSocketUrl)
+
+                webSocket.onopen = (_: Event) => {
+                    isConnecting = false
+                    this.logger.info('Connection established')
+
+                    this.localStore.connectionState('connected')
+                }
+
+                webSocket.onmessage = (event) => {
+                    this.logger.info('Data received from server', event.data)
+                    app.$emit('event', event.data)
+                }
+
+                webSocket.onclose = (event: CloseEvent) => {
+                    if (event.wasClean) {
+                        this.logger.info(`Connection closed cleanly, code=${event.code} reason=${event.reason}`)
+                    } else {
+                        // e.g. server process killed or network down
+                        // event.code is usually 1006 in this case
+                        this.logger.info(`Connection died`)
+                    }
+                    this.localStore.connectionState('disconnected')
+                }
+
+                webSocket.onerror = (error: Event) => {
+                    this.logger.info(`Error occurred!`, error)
+                }
+            }
+
+            // noinspection ES6MissingAwait
+            autoConnect()
+
+        } catch (_) {
+            this.logger.error('Could not establish ab WebSocket-Connection - continue without!')
+        }
     }
 
     @Action({ commit: '_connectionState' })
@@ -85,11 +96,21 @@ export default class WebSocketModule extends VuexModule implements WebSocketStor
 
     @Mutation
     private _init(_: unknown): void {
-        this.logger.debug('WebSocketModule initialized!')
+        this.logger.info('WebSocketModule initialized!')
     }
 
     @Mutation
     private _connectionState(payload: boolean): void {
         this.isConnected = payload
+    }
+
+    // - Stores / Stats - (sind in Mutations nicht verfügbar) ----------------------------------------------------------
+
+    private get localStore(): WebSocketModule {
+        return (this.context.rootState as RootState).webSocketStore() as WebSocketModule
+    }
+
+    private get localState(): SettingsStore {
+        return this.context.state as SettingsStore
     }
 }

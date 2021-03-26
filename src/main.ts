@@ -14,7 +14,7 @@ Vue.config.performance = process.env.NODE_ENV === 'development'
 // create the app instance.
 // here we inject the router, store and ssr context to all child components,
 // making them available everywhere as `this.$router` and `this.$store`.
-const app = new Vue({
+export const app = new Vue({
     router,
     store,
     vuetify,

@@ -24,7 +24,7 @@
         "importHelpers": true,
 
         "baseUrl": ".",
-        "types": ["webpack-env", "jest", "node", "vuetify", "jest-extended"],
+        "types": ["webpack-env", "jest", "vuetify", "jest-extended"],
         // Fallback wenn nach d.ts Files gesucht wird
         // "typeRoots": ["./src/shims-vuetify.d.ts"],
         

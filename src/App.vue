@@ -1,13 +1,13 @@
 <template>
     <v-app id="app" class="layout--off" color="gray-lighten2">
-        <v-app-bar app color="indigo" dark clipped-left>
+        <v-app-bar app dark clipped-left>
             <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
             <router-link to="/" class="to-home white--text">
                 <v-toolbar-title class="title">Application</v-toolbar-title>
             </router-link>
             <AppHeader></AppHeader>
         </v-app-bar>
-        <v-navigation-drawer app class="primary" v-model="drawer" stateless clipped>
+        <v-navigation-drawer app class="accent" v-model="drawer" stateless clipped>
             <v-list-item>
                 <v-list-item-content>
                     <v-list-item-title class="title">

@@ -14,7 +14,9 @@ class AuthModule extends VuexModule {
     private readonly logger = LoggerFactory.getLogger('vuetify-ts-starter.store.AuthModule')
 
     private readonly credentials: Credential[] = [{ username: 'guest4@shiro.at', password: 'guest123B?' }]
-    private _loggedIn = false
+
+    // für DEMO-Zwecke immer auf TRUE!
+    private _loggedIn = true
 
     public get isAuthenticated(): boolean {
         return this._loggedIn
