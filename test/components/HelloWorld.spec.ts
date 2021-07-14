@@ -1,5 +1,6 @@
-import HelloWorld from '@/components/HelloWorld.vue'
 import { mount, Wrapper } from '@vue/test-utils'
+import 'jest-extended'
+import HelloWorld from '../../src/components/HelloWorld.vue'
 import { localVue, store } from './_mocks/store'
 
 // import Vue from 'vue';

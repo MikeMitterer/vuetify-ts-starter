@@ -1,5 +1,6 @@
-import HelloWorld from '@/components/HelloWorld.vue'
 import { shallowMount, Wrapper } from '@vue/test-utils'
+import 'jest-extended'
+import HelloWorld from '../../src/components/HelloWorld.vue'
 import { localVue, store } from './_mocks/store'
 // import Vue from 'vue';
 // import { VueConstructor } from 'vue/types/vue';
@@ -18,7 +19,7 @@ describe('HelloWorld.vue', (): void => {
         }
     })
 
-    test('renders props.msg when passed', (): void => {
+    test('renders props.msg when passed II', (): void => {
         const msg = 'new message'
 
         // shallowMount rendert keine Child-Komponenten

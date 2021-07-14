@@ -1,15 +1,15 @@
-import { appStore, AppStore } from '@/store/interfaces/AppStore'
-import { CounterStore } from '@/store/interfaces/CounterStore'
-import { RootState } from '@/store/interfaces/RootState'
-import { webSocketStore, WebSocketStore } from '@/store/interfaces/WebSocketStore'
-import AppModule from '@/store/modules/AppModule'
-import CounterModule from '@/store/modules/CounterModule'
-import WebSocketModule from '@/store/modules/WebSocketModule'
-import { isNotRegistered } from '@/store/utils'
 import { LoggerFactory } from '@mmit/logging'
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import { getModule } from 'vuex-module-decorators'
+import { appStore, AppStore } from '../../../src/store/interfaces/AppStore'
+import { CounterStore } from '../../../src/store/interfaces/CounterStore'
+import { RootState } from '../../../src/store/interfaces/RootState'
+import { webSocketStore, WebSocketStore } from '../../../src/store/interfaces/WebSocketStore'
+import AppModule from '../../../src/store/modules/AppModule'
+import CounterModule from '../../../src/store/modules/CounterModule'
+import WebSocketModule from '../../../src/store/modules/WebSocketModule'
+import { isNotRegistered } from '../../../src/store/utils'
 
 export const localVue = createLocalVue()
 

@@ -5,7 +5,6 @@ import { getWebSocketServe } from '@/store/utils/WebSocketServer'
 import { LoggerFactory, LogLevel } from '@mmit/logging'
 
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
-import { SettingsStore } from '../../../../../../Production/mobiad/packages/ui/mobicast/src/store/interfaces/SettingsStore'
 
 import store from '../index'
 
@@ -110,7 +109,7 @@ export default class WebSocketModule extends VuexModule implements WebSocketStor
         return (this.context.rootState as RootState).webSocketStore() as WebSocketModule
     }
 
-    private get localState(): SettingsStore {
-        return this.context.state as SettingsStore
-    }
+    // private get localState(): SettingsStore {
+    //     return this.context.state as SettingsStore
+    // }
 }
