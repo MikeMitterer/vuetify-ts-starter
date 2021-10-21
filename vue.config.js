@@ -1,15 +1,23 @@
 const moment = require('moment');
-const package = require('./package');
-const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin');
+const pkg = require('./package')
+const fs = require("fs")
+const path = require('path')
+
+const date = moment().format('YYYY.MM.DD HH:mm');
+
+const { generateSW } = require('./.vue/pwa.config')
 
 // const { BASE_PATH, SITE_ORIGIN, META } = require("./src/assets/constants.json");
-const devMode = process.env.NODE_ENV !== 'production';
-const date = moment().format('YYYY.MM.DD HH:mm');
+const isProductionMode = process.env.NODE_ENV === 'production'
+const isDevMode = !isProductionMode
+
+// noinspection JSUnresolvedVariable
+const isAppInPWAMode = process.env.VUE_APP_USE_PWA_MODE ?? false
 
 // vue inspect zeigt die webpack.js an
 const templateParams = {
-    VUE_APP_VERSION: package.version,
-    VUE_APP_DEV_MODE: devMode,
+    VUE_APP_VERSION: pkg.version,
+    VUE_APP_DEV_MODE: isDevMode,
     VUE_APP_PUBLISHED: date,
 };
 
@@ -17,6 +25,11 @@ const templateParams = {
 process.env.VUE_APP_VERSION = templateParams.VUE_APP_VERSION;
 process.env.VUE_APP_DEV_MODE = templateParams.VUE_APP_DEV_MODE;
 process.env.VUE_APP_PUBLISHED = templateParams.VUE_APP_PUBLISHED;
+
+const webPackPluginsToUse = []
+if(isAppInPWAMode) {
+    webPackPluginsToUse.push( generateSW)
+}
 
 // http://bit.ly/2P5Pzdu
 module.exports = {
@@ -40,17 +53,32 @@ module.exports = {
         '@mmit\/.*',
     ],
 
+    // Weitere Infos:
+    //      https://webpack.js.org/configuration/dev-server/#devserverhttps
+    devServer: {
+        https: true,
+        // host: "localhost",
+        host: "mobiad.int.mikemitterer.at",
+        cert: fs.readFileSync(path.join(__dirname, ".ssl/mobiad.int.pem")),
+        key: fs.readFileSync(path.join(__dirname, ".ssl/mobiad.int.key"))
+    },
+
+    configureWebpack: {
+        plugins: webPackPluginsToUse
+    },
+
+
     // Wird z.B. für das Host-UI verwendet
     // outputDir: '../../../../DevJava/Production/WebAppCore/MobiAd/resources/templates',
 
-    configureWebpack: (config) => {
-        config.entry = {
-            app: './src/main.ts',
-            mobile: './src/mobile.ts',
-        };
+    // configureWebpack: (config) => {
+    //     config.entry = {
+    //         app: './src/main.ts',
+    //         mobile: './src/mobile.ts',
+    //     };
+    // },
 
-    },
-
+    // vue inspect - Zeigt die Config an
     chainWebpack: (config) => {
         config.plugin('html').tap((args) => {
             return args.map((arg) => {
@@ -62,6 +90,12 @@ module.exports = {
             });
         });
 
+        // vue inspect entry
+        config.entry('app').clear();
+        config.entry('app').add('./src/main.ts')
+        config.entry('mobile').clear();
+        config.entry('mobile').add('./src/mobile.ts')
+        
         // config.plugin("vuetify-loader").use(VuetifyLoaderPlugin);
     },
 

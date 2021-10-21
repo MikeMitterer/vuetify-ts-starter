@@ -3,6 +3,7 @@ import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-loade
 import Vue from 'vue'
 import App from './App.vue'
 import vuetify from './plugins/vuetify'
+import { registerServiceWorker, wb } from './registerServiceWorker'
 import router from './router'
 import store from './store'
 
@@ -10,6 +11,8 @@ Vue.config.productionTip = false
 Vue.config.performance = process.env.NODE_ENV === 'development'
 
 // Vue.use(Vuetify);
+
+registerServiceWorker()
 
 // create the app instance.
 // here we inject the router, store and ssr context to all child components,
