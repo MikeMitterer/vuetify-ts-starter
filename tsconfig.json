@@ -32,10 +32,13 @@
 
         "baseUrl": ".",
         "types": [
-            // "webpack-env",
-            "jest",
-            "node",
-            // "google.visualization",
+          "node",
+          "webpack-env",
+          "jest",
+          "jest-extended",
+          "vuetify",
+          "vuetify2-component-types",
+          "google.visualization"
         ],
         "paths": {
             "@/*": ["src/*"]
@@ -45,7 +48,7 @@
             "dom",
             //  error TS2488: Type 'FileList | never[]' must have a '[Symbol.iterator]()' method that returns an iterator.
             "dom.iterable",
-            "scripthost"
+            "scripthost",
         ],
         "plugins": [
             {
@@ -59,7 +62,7 @@
         "src/**/*.vue",
         "tests/**/*.ts",
         "tests/**/*.tsx",
-        
+
         // Damit werden die images erkannt
         "src/browser/**/*.ts",
         "src/site/images/typings.d.ts",
