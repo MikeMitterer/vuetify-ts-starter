@@ -57,7 +57,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 export default class HelloWorld extends Vue {
     private readonly logger = LoggerFactory.getLogger('vuetify-ts-starter.components.HelloWorld')
 
-    @Prop() private msg!: string
+    @Prop() public msg!: string
 
     public alert: boolean = true
 
@@ -67,7 +67,7 @@ export default class HelloWorld extends Vue {
     }
 
     // noinspection JSUnusedLocalSymbols
-    private get store(): CounterStore {
+    public get store(): CounterStore {
         return (this.$store.state as RootState).counterStore()
     }
 }

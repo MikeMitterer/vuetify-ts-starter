@@ -1,0 +1,11 @@
+{
+  "name": "@mmit/vuetify-ts-starter",
+  "description": "VUETIFY/TS Starter-Template",
+  "version": "0.2.1",
+  "from": "2023-10-12T15:49:52+0200",
+  "env": {
+    "environment": "dev",
+    "filename": ".env",
+    "authHost": "undefined"
+  }
+}

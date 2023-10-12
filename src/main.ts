@@ -6,6 +6,7 @@ import vuetify from './plugins/vuetify'
 import { registerServiceWorker, wb } from './registerServiceWorker'
 import router from './router'
 import { store } from './store'
+import {VNode} from "vue/types/vnode";
 
 Vue.config.productionTip = false
 Vue.config.performance = process.env.NODE_ENV === 'development'
@@ -28,7 +29,7 @@ const app = new Vue({
     },
 
     // tslint:disable-next-line:typedef
-    render: (h) => h(App),
+    render: (h) : VNode | null | void => h(App),
 })
 app.$mount('#app')
 

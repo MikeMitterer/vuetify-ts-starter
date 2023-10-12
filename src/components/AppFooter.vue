@@ -31,7 +31,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 @Component
 export default class AppFooter extends Vue {
     @Prop({ default: process.env.VUE_APP_TITLE })
-    private title!: string
+    public title!: string
 
     // Component methods can be declared as instance methods
     public onClickIncrement(): void {
@@ -64,7 +64,7 @@ export default class AppFooter extends Vue {
         return this.state.counterStore().count % 2 === 0
     }
 
-    private get state(): RootState {
+    public get state(): RootState {
         return this.$store.state as RootState
     }
 }

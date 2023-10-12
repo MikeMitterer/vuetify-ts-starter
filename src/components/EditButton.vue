@@ -12,7 +12,7 @@ export default class EditButton extends Vue {
     // private readonly logger = loggerFactory.getLogger('<package>');
 
     @Prop({ default: true })
-    private show!: boolean
+    public show!: boolean
 }
 </script>
 

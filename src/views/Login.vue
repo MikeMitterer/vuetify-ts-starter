@@ -60,9 +60,9 @@ import {RootState} from "@/store/interfaces/RootState";
 export default class Login extends Vue {
     private readonly logger = LoggerFactory.getLogger('views.Login')
 
-    private loading: boolean = false
-    private username: string = 'guest4@shiro.at'
-    private password: string = 'guest123B?'
+    public loading: boolean = false
+    public username: string = 'guest4@shiro.at'
+    public password: string = 'guest123B?'
 
 
     public async onLogin(): Promise<void> {

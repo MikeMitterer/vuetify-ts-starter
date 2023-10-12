@@ -47,11 +47,12 @@ import { CounterStore } from '@/store/interfaces/CounterStore'
 import { RootState } from '@/store/interfaces/RootState'
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import lambi from '../assets/images/lambi.png'
-import auth from '../store/modules/AuthModule'
+import {AuthStore} from "@/store/interfaces/AuthStore";
+
 
 @Component
 export default class AppHeader extends Vue {
-    @Prop() private msg!: string
+    @Prop() public msg!: string
 
     get img(): string {
         return lambi
@@ -62,16 +63,19 @@ export default class AppHeader extends Vue {
     }
 
     public get isAuthenticated(): boolean {
-        return auth.isAuthenticated
+        return this.auth.isAuthenticated
     }
 
     public async logout(): Promise<void> {
-        await auth.logout()
+        await this.auth.logout()
         await this.$router.push('login')
     }
 
-    private get store(): CounterStore {
+    public get store(): CounterStore {
         return (this.$store.state as RootState).counterStore()
+    }
+    public get auth(): AuthStore {
+        return (this.$store.state as RootState).authStore()
     }
 }
 </script>

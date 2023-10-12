@@ -93,7 +93,7 @@
 
 <script lang="ts">
 import EditButton from '@/components/EditButton.vue'
-import { Article } from '@/model/Article'
+import {Article, newArticle} from '@/model/Article'
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
 interface Section {
@@ -105,40 +105,40 @@ interface Section {
 type EditSection = keyof Section
 @Component({ components: { EditButton } })
 export default class ArticleComponent extends Vue {
-    private static readonly sections: Section = {
+    public static readonly sections: Section = {
         Undefined: -1,
         Description: 0,
         Price: 1,
     }
 
-    @Prop({ default: '' })
-    private article: Article | undefined
+    @Prop({ default: newArticle() })
+    public article!: Article
 
     @Prop({ default: false })
-    private addMode!: boolean
+    public addMode!: boolean
 
     /**
      * Wenn in der Artikelliste der jeweilige (dieser) Artikel angeklickt wurde
      */
     @Prop({ default: false })
-    private isActive!: boolean
+    public isActive!: boolean
 
     /**
      * Definiert welches Element aktiv ist
      */
-    private toggle: number = -1
+    public toggle: number = -1
 
-    private tempArticle: Article | '' = ''
+    public tempArticle: Article = newArticle()
 
     @Watch('isActive')
-    private onIsActiveChanged(val: boolean, _: boolean): void {
+    public onIsActiveChanged(val: boolean, _: boolean): void {
         if (!val) {
             this.toggle = -1
         }
     }
 
     // noinspection JSUnusedLocalSymbols
-    private onEdit(section: EditSection): void {
+    public onEdit(section: EditSection): void {
         this.tempArticle = Object.assign(this.tempArticle, this.article)
 
         if (!this.isActive) {
@@ -149,15 +149,15 @@ export default class ArticleComponent extends Vue {
     }
 
     // noinspection JSUnusedLocalSymbols
-    private onCancel(): void {
-        this.tempArticle = ''
+    public onCancel(): void {
+        this.tempArticle = newArticle()
         this.$emit('activate', false)
     }
 
     // noinspection JSUnusedLocalSymbols
-    private onSave(): void {
+    public onSave(): void {
         this.article = Object.assign(this.article as Article, this.tempArticle) as Article
-        this.tempArticle = ''
+        this.tempArticle = newArticle()
         this.$emit('activate', false)
     }
 }

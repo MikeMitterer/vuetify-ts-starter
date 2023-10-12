@@ -1,0 +1,23 @@
+// -------------------------------------------------------------------------------------------------
+// Die .lib-Version exkludiert src/browser das dieses Dir nur zum Testen
+// im browser benötigt wird
+//
+// Dieses File wird auch in packages#buidl.ts verwendet (zum Erstellen der Lib)
+//
+// Weitere Infos:
+//    https://marcobotto.com/blog/compiling-and-bundling-typescript-libraries-with-webpack/
+//    https://www.typescriptlang.org/docs/handbook/compiler-options.html
+//
+{
+    "compilerOptions": {
+        // If types is specified, only packages listed will be included.
+        //      Mehr: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html#types-typeroots-and-types
+        "types": [
+            "node",
+            "jest",
+            "jest-extended",
+            "vuetify",
+            "vuetify2-component-types",
+        ]
+    },
+}

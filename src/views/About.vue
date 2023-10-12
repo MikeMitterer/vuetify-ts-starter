@@ -83,7 +83,7 @@ export default class About extends Vue {
     }
 
     // noinspection JSUnusedLocalSymbols
-    private get store(): CounterStore {
+    public get store(): CounterStore {
         return (this.$store.state as RootState).counterStore()
     }
 }

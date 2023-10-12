@@ -12,7 +12,7 @@ import crudModule from '../store/modules/CrudModule'
 
 @Component({ components: {} })
 export default class ArticleView extends Vue {
-    private get articles(): readonly Article[] {
+    public get articles(): readonly Article[] {
         return crudModule.articles
     }
 
