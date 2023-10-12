@@ -6,9 +6,9 @@ import vue from '@vitejs/plugin-vue2'
 import { ViteEjsPlugin } from "vite-plugin-ejs";
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import { format } from 'date-fns'
-import { VitePWA } from 'vite-plugin-pwa'
 
 import pkg from './package.json';
+
 
 import path from "path"
 
@@ -92,7 +92,6 @@ export default defineConfig(({ command, mode }) => {
                     VUE_APP_DEV_MODE: devMode
                 }
             }),
-            VitePWA(),
         ],
         // optimizeDeps: {
         //     esbuildOptions: {

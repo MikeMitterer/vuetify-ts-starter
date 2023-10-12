@@ -55,9 +55,13 @@ else
 fi
 
 readonly TEMPLATE_FOLDER="${DEV_LOCAL}/Templates/Production/TypeScript"
+
 readonly PACKAGE_FOLDER="package"
 readonly SCRIPT_SECTION="scripts-wp_env.json"
 readonly SCRIPT_SECTION_FILE="${TEMPLATE_FOLDER}/${PACKAGE_FOLDER}/${SCRIPT_SECTION}"
+
+readonly DEFAULT_JENKINS_BUILD="build.jenkins"
+readonly DEFAULT_JENKINS_BUILD_FILE="${TEMPLATE_FOLDER}/${DEFAULT_JENKINS_BUILD}"
 
 # CMDLINE kann ab hier verwendet werden ---------------------------------------
 readonly CMDLINE=${1:-}
@@ -140,6 +144,7 @@ addPackages() {
       typescript@5.2.2 \
       vite-plugin-ejs@1.6.4 \
       vite-plugin-node-polyfills@0.15.0 \
+      vite-plugin-pwa@0.16.5 \
       vite@4.4.9 \
       vue-template-compiler@2.7 \
       vue-tsc@1.8.15 \
@@ -190,6 +195,10 @@ showScriptsSection() {
   subl "${SCRIPT_SECTION_FILE}"
 }
 
+showJenkinsBuild() {
+  subl "${DEFAULT_JENKINS_BUILD_FILE}"
+}
+
 #------------------------------------------------------------------------------
 # Options
 #
@@ -208,7 +217,9 @@ usage() {
     usageLine "-r                     " "Remove packages"
     usageLine "-a                     " "Add packages"
     usageLine "-c                     " "Change files"
-    usageLine "-s                     " "Show default Scripts-Section (${YELLOW}${PACKAGE_FOLDER}/${SCRIPT_SECTION}${NC})"
+    echo
+    usageLine "-ss                    " "Show default Scripts-Section (${YELLOW}${PACKAGE_FOLDER}/${SCRIPT_SECTION}${NC})"
+    usageLine "-sj                    " "Show default Jenkins-Build (${YELLOW}${DEFAULT_JENKINS_BUILD}${NC})"
     echo
     usageLine "--clean                " "Clean"
     echo
@@ -236,8 +247,12 @@ case "$CMDLINE" in
         changeFiles
     ;;
 
-    -s)
+    -ss)
         showScriptsSection
+    ;;
+
+    -sj)
+        showJenkinsBuild
     ;;
 
     -i)

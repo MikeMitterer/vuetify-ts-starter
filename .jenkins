@@ -14,7 +14,8 @@ JENKINS_JOB_TOKEN="vuetify-ts-starter"
 
 # Parameter werden bei manchen builds benötigt
 JENKINS_PARAMS=(
-    "REMOVE_NODE_MODULES=true"
+    "RUN_TESTS=true"
+    "REMOVE_NODE_MODULES=false"
     "PUBLISH_TO_TESTSERVER=false"
-    "delay=1"
+    # "delay=1"
 )

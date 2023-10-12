@@ -1,4 +1,3 @@
-import { app } from '@/main'
 import { CounterStore } from '@/store/interfaces/CounterStore'
 import { LoggerFactory, LogLevel } from '@mmit/logging'
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'

@@ -7,6 +7,7 @@ pipeline {
     environment { SRC_CHANGED=true }
 
     parameters {
+        booleanParam(defaultValue: true, description: 'Run tests', name: 'RUN_TESTS')
         booleanParam(defaultValue: false, description: 'Deletes node_modules-Folder', name: 'REMOVE_NODE_MODULES')
         booleanParam(defaultValue: false, description: 'Publishes to TestServer', name: 'PUBLISH_TO_TESTSERVER')
     }
@@ -49,6 +50,7 @@ pipeline {
             }
         }
         stage('Test') {
+            when { expression { params.RUN_TESTS } }
             steps {
                 ansiColor('xterm') {
                     sh 'yarn tc'
