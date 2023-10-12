@@ -33,7 +33,9 @@
     "build:prod": "yarn run --silent version:gen production > public/app.json && vue-tsc --noEmit && vite --mode production build",
     "deploy": "test $(yarn --version | awk -F. '{ print $1 }') -eq 4 && yarn run deploy:y4 || yarn run deploy:y2",
     "deploy:y2": "yarn version --new-version patch && yarn publish --non-interactive",
-    "deploy:y4": "yarn version patch && yarn npm publish --access restricted"
+    "deploy:y4": "yarn version patch && yarn npm publish --access restricted",
+    "export": "yarn export:scripts",
+    "export:scripts": "jq -r '.scripts' package.json > \"${DEV_LOCAL}/Templates/Production/TypeScript/package/scripts-vite_env.json\""
   },
   "keywords": [
     "typescript vue"
