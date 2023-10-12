@@ -10,6 +10,8 @@ import AppModule from '../../../src/store/modules/AppModule'
 import CounterModule from '../../../src/store/modules/CounterModule'
 import WebSocketModule from '../../../src/store/modules/WebSocketModule'
 import { isNotRegistered } from '../../../src/store/utils'
+import {authStore, AuthStore} from "@/store/interfaces/AuthStore";
+import AuthModule from "@/store/modules/AuthModule";
 
 export const localVue = createLocalVue()
 
@@ -45,6 +47,13 @@ const state: RootState = {
             store.registerModule(appStore.NAME, AppModule)
         }
         return getModule(AppModule, store)
+    },
+
+    authStore: (): AuthStore => {
+        if (isNotRegistered(authStore.NAME, store)) {
+            store.registerModule(authStore.NAME, AuthModule)
+        }
+        return getModule(AuthModule, store)
     },
 }
 

@@ -5,7 +5,6 @@
  *  Mehr: https://jestjs.io/docs/en/configuration.html#setupfilesafterenv-array
  */
 import Vue from 'vue';
-import Vuetify from 'vuetify';
+import vuetify from '@/plugins/vuetify'
+import {createLocalVue} from "@vue/test-utils";
 
-Vue.config.productionTip = false;
-Vue.use(Vuetify);
