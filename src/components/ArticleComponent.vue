@@ -156,7 +156,7 @@ export default class ArticleComponent extends Vue {
 
     // noinspection JSUnusedLocalSymbols
     private onSave(): void {
-        this.article = Object.assign(this.article, this.tempArticle)
+        this.article = Object.assign(this.article as Article, this.tempArticle) as Article
         this.tempArticle = ''
         this.$emit('activate', false)
     }

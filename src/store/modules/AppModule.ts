@@ -1,12 +1,10 @@
-import { app } from '@/main'
 import { appStore, AppStore } from '@/store/interfaces/AppStore'
 import { LoggerFactory, LogLevel } from '@mmit/logging'
 
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
 
-import store from '../index'
 
-@Module({ namespaced: true, name: appStore.NAME, store })
+@Module({ namespaced: true, name: appStore.NAME })
 export default class AppModule extends VuexModule implements AppStore {
     private readonly logger = LoggerFactory.for('vuetify-ts-starter.store.modules.AppModule')
         .level(LogLevel.INFO)
@@ -23,9 +21,9 @@ export default class AppModule extends VuexModule implements AppStore {
     public async init(): Promise<void> {
         this.logger.info('AppModule initializing...')
 
-        app.$on('event', (payload: unknown) => {
-            this.logger.info('Received:', payload)
-        })
+        // app.$on('event', (payload: unknown) => {
+        //     this.logger.info('Received:', payload)
+        // })
     }
 
 

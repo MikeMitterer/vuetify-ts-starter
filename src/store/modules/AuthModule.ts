@@ -1,16 +1,11 @@
 import { LoggerFactory } from '@mmit/logging'
 import { Action, getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators'
-import store from '../index'
+import {authStore, AuthStore, Credential} from "@/store/interfaces/AuthStore";
 
-export interface Credential {
-    username: string
-    password: string
-}
 
-@Module({ dynamic: true, namespaced: true, name: AuthModule.NAME, store })
-class AuthModule extends VuexModule {
-    public static readonly NAME = 'authModule'
 
+@Module({  namespaced: true, name: authStore.NAME })
+export default class AuthModule extends VuexModule  implements AuthStore {
     private readonly logger = LoggerFactory.getLogger('vuetify-ts-starter.store.AuthModule')
 
     private readonly credentials: Credential[] = [{ username: 'guest4@shiro.at', password: 'guest123B?' }]
@@ -20,6 +15,13 @@ class AuthModule extends VuexModule {
 
     public get isAuthenticated(): boolean {
         return this._loggedIn
+    }
+
+    // action 'init' commits mutation '_init' when done with return value as payload
+    // Action kann nur EINEN Parameter haben - Payload!
+    @Action({ commit: '_init' })
+    public async init(payload?: undefined): Promise<void> {
+        this.logger.debug(`Initializing AuthModule...`)
     }
 
     // action 'login' commits mutation '_login' when done with return value as payload
@@ -41,6 +43,10 @@ class AuthModule extends VuexModule {
     }
 
     // - Keep all the Mutations private - we don't want to call Mutations directly -----------------
+    @Mutation
+    private _init(_: unknown): void {
+        this.logger.info('AuthModule initialized!')
+    }
 
     @Mutation
     private _login(success: boolean): void {
@@ -54,4 +60,3 @@ class AuthModule extends VuexModule {
     }
 }
 
-export default getModule(AuthModule)

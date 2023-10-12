@@ -1,4 +1,3 @@
-import { app } from '@/main'
 import { RootState } from '@/store/interfaces/RootState'
 import { WebSocketStore, webSocketStore } from '@/store/interfaces/WebSocketStore'
 import { getWebSocketServe } from '@/store/utils/WebSocketServer'
@@ -6,9 +5,7 @@ import { LoggerFactory, LogLevel } from '@mmit/logging'
 
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
 
-import store from '../index'
-
-@Module({ namespaced: true, name: webSocketStore.NAME, store })
+@Module({ namespaced: true, name: webSocketStore.NAME })
 export default class WebSocketModule extends VuexModule implements WebSocketStore {
     private readonly logger = LoggerFactory.for('vuetify-ts-starter.store.modules.WebSocket')
         .level(LogLevel.INFO)
@@ -34,7 +31,7 @@ export default class WebSocketModule extends VuexModule implements WebSocketStor
             let webSocket: WebSocket
             let isConnecting = false
 
-            const autoConnect = async () => {
+            const autoConnect = async (): Promise<void> => {
                 if (typeof timerID !== 'undefined') {
                     clearInterval(timerID)
                     timerID = undefined
@@ -47,22 +44,22 @@ export default class WebSocketModule extends VuexModule implements WebSocketStor
                 }, 1000)
             }
 
-            const connect = async () => {
+            const connect = async (): Promise<void> => {
                 webSocket = new WebSocket(webSocketUrl)
 
-                webSocket.onopen = (_: Event) => {
+                webSocket.onopen = (_: Event): void => {
                     isConnecting = false
                     this.logger.info('Connection established')
 
                     this.localStore.connectionState('connected')
                 }
 
-                webSocket.onmessage = (event) => {
+                webSocket.onmessage = (event): void => {
                     this.logger.info('Data received from server', event.data)
-                    app.$emit('event', event.data)
+                    // app.$emit('event', event.data)
                 }
 
-                webSocket.onclose = (event: CloseEvent) => {
+                webSocket.onclose = (event: CloseEvent): void => {
                     if (event.wasClean) {
                         this.logger.info(`Connection closed cleanly, code=${event.code} reason=${event.reason}`)
                     } else {
@@ -73,7 +70,7 @@ export default class WebSocketModule extends VuexModule implements WebSocketStor
                     this.localStore.connectionState('disconnected')
                 }
 
-                webSocket.onerror = (error: Event) => {
+                webSocket.onerror = (error: Event): void => {
                     this.logger.info(`Error occurred!`, error)
                 }
             }

@@ -1,13 +1,16 @@
 import Vue from 'vue'
+import { store } from '@/store'
 import Router from 'vue-router'
-import auth from './store/modules/AuthModule'
 import Home from './views/Home.vue'
+import {AuthStore} from "@/store/interfaces/AuthStore";
 
 Vue.use(Router)
 
+const auth = (): AuthStore => store.state.authStore()
+
 // tslint:disable-next-line:no-any
 const ifAuthenticated = (to: any, from: any, next: any): void => {
-    if (auth.isAuthenticated) {
+    if (auth().isAuthenticated) {
         next()
         return
     }

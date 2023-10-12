@@ -9,6 +9,9 @@ import { isNotRegistered } from '@/store/utils'
 import Vue from 'vue'
 import Vuex, { ActionContext, ActionTree, MutationTree } from 'vuex'
 import { getModule } from 'vuex-module-decorators'
+import {authStore, AuthStore} from "@/store/interfaces/AuthStore";
+import AuthModule from "@/store/modules/AuthModule";
+import {LoggerFactory} from "@mmit/logging";
 
 // import gameModule from './modules/GameModule';
 
@@ -40,6 +43,13 @@ const state: RootState = {
         }
         return getModule(AppModule, store)
     },
+
+    authStore: (): AuthStore => {
+        if (isNotRegistered(authStore.NAME, store)) {
+            store.registerModule(authStore.NAME, AuthModule)
+        }
+        return getModule(AuthModule, store)
+    },
 }
 
 /**
@@ -57,7 +67,9 @@ const actions: ActionTree<RootState, RootState> = {
      * @param context
      * @param payload
      */
-    async readyState(context: ActionContext<RootState, RootState>, payload: undefined): Promise<void> {
+    async readyState(context: ActionContext<RootState, RootState>, payload: boolean = true): Promise<void> {
+
+        await context.state.authStore().init()
 
         await context.state.webSocketStore().init()
 
@@ -65,7 +77,7 @@ const actions: ActionTree<RootState, RootState> = {
 
         await context.state.appStore().init()
 
-        context.commit('readyState', true)
+        context.commit('readyState', payload)
     },
 }
 
@@ -76,12 +88,15 @@ const actions: ActionTree<RootState, RootState> = {
  */
 const mutations: MutationTree<RootState> = {
     readyState(status: RootState, payload): void {
-        // logger.info(`readyState - Mutation`);
-        status.loaded = true
+        const logger = LoggerFactory.getLogger('vuetify-ts-starter.store.mutations.readyState')
+
+        status.loaded = payload
+
+        logger.info('Root-Store initialized!')
     },
 }
 
-const store = new Vuex.Store<RootState>({
+export const store = new Vuex.Store<RootState>({
     state,
     actions,
     mutations,
@@ -90,4 +105,4 @@ const store = new Vuex.Store<RootState>({
     // },
 })
 
-export default store
+

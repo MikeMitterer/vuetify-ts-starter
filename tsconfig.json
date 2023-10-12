@@ -2,7 +2,14 @@
     "compilerOptions": {
         "strict": true,
 
-        "target": "es6",
+        "target": "es2020",
+        "rootDir": "./",
+
+        // commonjs, amd, system oder es6 (= es2015), esnext
+        // - commonjs ist im Starter-Template von MS
+        //
+        // Beste Variante ist es6 (Vue esnext)
+        // Mehr: http://www.geekabyte.io/2018/12/understanding-javascript-modules-as.html
         "module": "esnext",
         "moduleResolution": "node",
 
@@ -24,14 +31,22 @@
         "importHelpers": true,
 
         "baseUrl": ".",
-        "types": ["webpack-env", "jest", "vuetify", "jest-extended"],
-        // Fallback wenn nach d.ts Files gesucht wird
-        // "typeRoots": ["./src/shims-vuetify.d.ts"],
-        
+        "types": [
+            // "webpack-env",
+            "jest",
+            "node",
+            // "google.visualization",
+        ],
         "paths": {
             "@/*": ["src/*"]
         },
-        "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
+        "lib": [
+            "esnext",
+            "dom",
+            //  error TS2488: Type 'FileList | never[]' must have a '[Symbol.iterator]()' method that returns an iterator.
+            "dom.iterable",
+            "scripthost"
+        ],
         "plugins": [
             {
                 "name": "typescript-tslint-plugin"
@@ -44,13 +59,17 @@
         "src/**/*.vue",
         "tests/**/*.ts",
         "tests/**/*.tsx",
-
+        
         // Damit werden die images erkannt
         "src/browser/**/*.ts",
         "src/site/images/typings.d.ts",
-        "src/site/images"
+        "src/site/images",
 
+        "node_modules/@mmit/mobicore/src/types/*.d.ts",
 
-    ],
-    "exclude": ["node_modules"]
+        // Muss auch in tsconfig.lib.json definiert sein!
+        // Damit funktioniert z.B. 'const conf: MobiAdApp.Config' ohne import
+        "src/types/*.d.ts"
+    ]
+    // "exclude": ["node_modules"]
 }

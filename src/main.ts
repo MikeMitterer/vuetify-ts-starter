@@ -5,7 +5,7 @@ import App from './App.vue'
 import vuetify from './plugins/vuetify'
 import { registerServiceWorker, wb } from './registerServiceWorker'
 import router from './router'
-import store from './store'
+import { store } from './store'
 
 Vue.config.productionTip = false
 Vue.config.performance = process.env.NODE_ENV === 'development'
@@ -17,7 +17,7 @@ registerServiceWorker()
 // create the app instance.
 // here we inject the router, store and ssr context to all child components,
 // making them available everywhere as `this.$router` and `this.$store`.
-export const app = new Vue({
+const app = new Vue({
     router,
     store,
     vuetify,
@@ -29,7 +29,8 @@ export const app = new Vue({
 
     // tslint:disable-next-line:typedef
     render: (h) => h(App),
-}).$mount('#app')
+})
+app.$mount('#app')
 
 // export default new Vuetify({
 //     icons: {

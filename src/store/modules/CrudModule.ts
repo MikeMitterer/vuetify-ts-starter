@@ -1,7 +1,7 @@
 import { Article } from '@/model/Article'
 // import { LoggerFactory } from '@mmit/logging';
 import { Action, getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators'
-import store from '../index'
+import { store } from '../index'
 
 @Module({ dynamic: true, namespaced: true, name: 'crudModule', store })
 class CrudModule extends VuexModule {
