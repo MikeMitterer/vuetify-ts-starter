@@ -6,21 +6,22 @@ import vue from '@vitejs/plugin-vue2'
 import { ViteEjsPlugin } from "vite-plugin-ejs";
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import { format } from 'date-fns'
+import path from "path"
 
 import pkg from './package.json';
 
-
-import path from "path"
-
 const date = format(Date.now(), 'yyyy.MM.dd HH:mm');
 const devMode = process.env.NODE_ENV !== 'production';
+
+const packageName = pkg.name.split('/')
+const fileName = packageName.length > 1 ? packageName[1] : packageName[0];
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
     // Load env file based on `mode` in the current working directory.
     // Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
     const env = loadEnv(mode, process.cwd(), '');
-    console.log(`Mode: ${mode}, Command: ${command}`)
+    console.log(`Mode: ${mode}, Command: ${command}, Filename: ${fileName}`)
     
     return {
         // rollupOptions: {
