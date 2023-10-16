@@ -57,11 +57,15 @@ fi
 readonly TEMPLATE_FOLDER="${DEV_LOCAL}/Templates/Production/TypeScript"
 
 readonly PACKAGE_FOLDER="package"
-readonly SCRIPT_SECTION="scripts-wp_env.json"
+#readonly SCRIPT_SECTION="scripts-wp_env.json"
+readonly SCRIPT_SECTION="scripts-vite_env.json"
 readonly SCRIPT_SECTION_FILE="${TEMPLATE_FOLDER}/${PACKAGE_FOLDER}/${SCRIPT_SECTION}"
 
 readonly DEFAULT_JENKINS_BUILD="build.jenkins"
 readonly DEFAULT_JENKINS_BUILD_FILE="${TEMPLATE_FOLDER}/${DEFAULT_JENKINS_BUILD}"
+
+# readonly EDITOR="fleet"
+readonly EDITOR="subl"
 
 # CMDLINE kann ab hier verwendet werden ---------------------------------------
 readonly CMDLINE=${1:-}
@@ -192,11 +196,11 @@ clean() {
 }
 
 showScriptsSection() {
-  subl "${SCRIPT_SECTION_FILE}"
+  "${EDITOR}" "${SCRIPT_SECTION_FILE}"
 }
 
 showJenkinsBuild() {
-  subl "${DEFAULT_JENKINS_BUILD_FILE}"
+  "${EDITOR}" "${DEFAULT_JENKINS_BUILD_FILE}"
 }
 
 #------------------------------------------------------------------------------
@@ -218,7 +222,7 @@ usage() {
     usageLine "-a                     " "Add packages"
     usageLine "-c                     " "Change files"
     echo
-    usageLine "-ss                    " "Show default Scripts-Section (${YELLOW}${PACKAGE_FOLDER}/${SCRIPT_SECTION}${NC})"
+    usageLine "-ss | -sp              " "Show default Scripts-Section (${YELLOW}${PACKAGE_FOLDER}/${SCRIPT_SECTION}${NC})"
     usageLine "-sj                    " "Show default Jenkins-Build (${YELLOW}${DEFAULT_JENKINS_BUILD}${NC})"
     echo
     usageLine "--clean                " "Clean"
@@ -247,7 +251,7 @@ case "$CMDLINE" in
         changeFiles
     ;;
 
-    -ss)
+    -ss|-sp)
         showScriptsSection
     ;;
 

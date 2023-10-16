@@ -30,6 +30,7 @@
     "test:integration": "jest --colors --runInBand --detectOpenHandles tests/integration",
     "test:e2e": "E2E_TEST='true' jest --colors --runInBand --detectOpenHandles tests/e2e",
     "build": "yarn run --silent version:gen dev > public/app.json && vue-tsc --noEmit && vite --mode development build",
+    "build:types": "vue-tsc --emitDeclarationOnly && resolve-tspaths",
     "build:live": "yarn run --silent version:gen live > public/app.json && vue-tsc --noEmit && vite --mode live build",
     "build:prod": "yarn run --silent version:gen production > public/app.json && vue-tsc --noEmit && vite --mode production build",
     "deploy": "test $(yarn --version | awk -F. '{ print $1 }') -eq 4 && yarn run deploy:y4 || yarn run deploy:y2",
