@@ -19,6 +19,7 @@
     "clean:jest": "jest --clearCache",
     "clean:all": "yarn clean && yarn clean:jest && rm -f yarn.lock && rm -rf node_modules && yarn clean cache",
     "start": "vite --mode development --open",
+    "start:live": "vite --mode live --open",
     "start:prod": "vite --mode production --open",
     "tc": "tsc --noEmit --project tsconfig.json",
     "lint": "yarn eslint src tests",
